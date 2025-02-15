@@ -3,32 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Training Portal - Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Employee Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .login-container { max-width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        input { width: 100%; padding: 10px; margin: 5px 0; }
+        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Staff Training Portal</h2>
 
-        <!-- Employee Login -->
-        <div class="form-group">
-            <h3>Employee Login</h3>
-            <input type="email" id="employee-id" placeholder="Enter your email">
-            <input type="password" id="password" placeholder="Enter your password">
-            <button id="login-btn">Login</button>
-        </div>
-
-        <hr>
-
-        <!-- Employee Registration -->
-        <div class="form-group">
-            <h3>New Here? Register Below</h3>
-            <input type="email" id="new-email" placeholder="Enter your email">
-            <input type="password" id="new-password" placeholder="Create a password">
-            <button id="register-btn">Register</button>
-        </div>
+    <h2>Employee Login</h2>
+    <div class="login-container">
+        <input type="text" id="employeeID" placeholder="Enter Employee ID" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <button onclick="login()">Login</button>
+        <p id="error-msg" style="color: red;"></p>
     </div>
 
-    <script type="module" src="js/main.js"></script>
+    <script>
+        // Predefined employee credentials (You can add more employees here)
+        const employees = {
+            "emp001": "password123",
+            "emp002": "securepass",
+            "emp003": "training2024"
+        };
+
+        function login() {
+            const employeeID = document.getElementById("employeeID").value;
+            const password = document.getElementById("password").value;
+
+            if (employees[employeeID] && employees[employeeID] === password) {
+                localStorage.setItem("loggedInEmployee", employeeID);
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                document.getElementById("error-msg").innerText = "Invalid Employee ID or Password";
+            }
+        }
+    </script>
+
 </body>
 </html>
