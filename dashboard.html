@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +7,9 @@
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
         .container { max-width: 600px; margin: auto; }
-        .course { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
-        button { padding: 10px 15px; background: #dc3545; color: white; border: none; cursor: pointer; }
+        .dropdown { width: 100%; padding: 10px; font-size: 16px; margin: 10px 0; }
+        .video-container { display: none; margin-top: 20px; }
+        button { padding: 10px 15px; background: #dc3545; color: white; border: none; cursor: pointer; margin-top: 10px; }
         button:hover { background: #c82333; }
     </style>
 </head>
@@ -18,21 +19,20 @@
     <button onclick="logout()">Logout</button>
 
     <div class="container">
-        <h3>Available Courses</h3>
+        <h3>Select a Course</h3>
 
-        <div class="course">
-            <h4>Course 1: Cybersecurity Basics</h4>
-            <iframe width="100%" height="250" src="https://www.youtube.com/embed/6gbsNi0n0ME" allowfullscreen></iframe>
-        </div>
+        <!-- Dropdown Menu -->
+        <select id="courseDropdown" class="dropdown" onchange="showVideo()">
+            <option value="">-- Select a Course --</option>
+            <option value="welcome">Welcome to DF Dynamics</option>
+            <option value="prompting">Prompting Methods</option>
+            <option value="editor">Text Editor Setup</option>
+        </select>
 
-        <div class="course">
-            <h4>Course 2: Network Security</h4>
-            <iframe width="100%" height="250" src="https://www.youtube.com/embed/9UqI3R2ut2c" allowfullscreen></iframe>
-        </div>
-
-        <div class="course">
-            <h4>Course 3: Phishing Awareness</h4>
-            <iframe width="100%" height="250" src="https://www.youtube.com/embed/Y76EQrD2ozE" allowfullscreen></iframe>
+        <!-- Video Sections (Initially Hidden) -->
+        <div id="videoContainer" class="video-container">
+            <h4 id="videoTitle"></h4>
+            <iframe id="videoFrame" width="100%" height="250" src="" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -48,6 +48,28 @@
         function logout() {
             localStorage.removeItem("loggedInEmployee");
             window.location.href = "index.html"; // Redirect to login page
+        }
+
+        function showVideo() {
+            const dropdown = document.getElementById("courseDropdown").value;
+            const videoContainer = document.getElementById("videoContainer");
+            const videoTitle = document.getElementById("videoTitle");
+            const videoFrame = document.getElementById("videoFrame");
+
+            // Video URLs
+            const videos = {
+                "welcome": { title: "Welcome to DF Dynamics", url: "https://www.youtube.com/embed/6gbsNi0n0ME" },
+                "prompting": { title: "Prompting Methods", url: "https://www.youtube.com/embed/9UqI3R2ut2c" },
+                "editor": { title: "Text Editor Setup", url: "https://www.youtube.com/embed/Y76EQrD2ozE" }
+            };
+
+            if (dropdown) {
+                videoContainer.style.display = "block";
+                videoTitle.innerText = videos[dropdown].title;
+                videoFrame.src = videos[dropdown].url;
+            } else {
+                videoContainer.style.display = "none";
+            }
         }
     </script>
 
