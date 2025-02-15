@@ -4,93 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Training Portal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            background: #007bff;
-            padding: 15px;
-            color: white;
-            font-size: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logout-btn {
-            background: red;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .course-dropdown {
-            margin-top: 20px;
-        }
-
-        .dropdown-btn {
-            padding: 12px 20px;
-            font-size: 16px;
-            background: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        .dropdown-content {
-            display: none;
-            background-color: white;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            width: 250px;
-            margin: auto;
-            border-radius: 5px;
-        }
-
-        .dropdown-content a {
-            display: block;
-            padding: 12px;
-            text-decoration: none;
-            color: black;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-        #videoContainer, #quizContainer {
-            display: none;
-            margin-top: 20px;
-        }
-
-        iframe {
-            width: 80%;
-            height: 350px;
-            border-radius: 10px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-top: 15px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .quiz-btn {
-            background: #ffc107;
-            color: black;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -125,51 +39,7 @@
         <button class="btn" onclick="submitQuiz()">Submit Answer</button>
     </div>
 
-    <script>
-        let currentLesson = null;
-        let completedQuizzes = {};
-
-        const videoLinks = {
-            "lesson1": "https://www.youtube.com/embed/YOUR_VIDEO_ID1",
-            "lesson2": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
-            "lesson3": "https://www.youtube.com/embed/YOUR_VIDEO_ID3",
-            "lesson4": "https://www.youtube.com/embed/YOUR_VIDEO_ID4"
-        };
-
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdownMenu");
-            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-        }
-
-        function showVideo(title, lessonId) {
-            if (!completedQuizzes[lessonId]) {
-                document.getElementById("videoTitle").innerText = title;
-                document.getElementById("videoFrame").src = videoLinks[lessonId] || "";
-                document.getElementById("videoContainer").style.display = "block";
-                document.getElementById("quizContainer").style.display = "none";
-                document.getElementById("dropdownMenu").style.display = "none"; // Hide dropdown
-                currentLesson = lessonId;
-            } else {
-                alert("You must complete the quiz before moving on.");
-            }
-        }
-
-        function showQuiz() {
-            document.getElementById("videoContainer").style.display = "none";
-            document.getElementById("quizContainer").style.display = "block";
-        }
-
-        function submitQuiz() {
-            alert("Quiz completed! You can now access the next video.");
-            completedQuizzes[currentLesson] = true;
-            document.getElementById("quizContainer").style.display = "none";
-        }
-
-        function logout() {
-            alert("Logged out successfully!");
-            window.location.href = "index.html"; // Redirect to login page
-        }
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
