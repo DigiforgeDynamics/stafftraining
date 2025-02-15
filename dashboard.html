@@ -3,164 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        .container { max-width: 600px; margin: auto; }
-        .topic { background: #007bff; color: white; padding: 10px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
-        .lessons { display: none; padding: 10px; background: #f1f1f1; border-radius: 5px; }
-        .lesson { cursor: pointer; color: #007bff; text-decoration: underline; margin: 5px 0; }
-        .completed { color: green; font-weight: bold; }
-        .video-container, .quiz-container { display: none; margin-top: 20px; }
-        iframe { width: 100%; height: 250px; }
-        button { padding: 10px 15px; background: #28a745; color: white; border: none; cursor: pointer; margin-top: 10px; }
-        button:hover { background: #218838; }
-    </style>
+    <title>DF Dynamics Training Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Welcome to DF Dynamics Training Portal</h1>
+    </header>
 
-    <h2>Welcome, <span id="employeeName"></span>!</h2>
-    <button onclick="logout()">Logout</button>
+    <main>
+        <!-- Course Dropdown Section -->
+        <section id="courses">
+            <h2>Select a Course</h2>
+            <div class="dropdown">
+                <button class="dropbtn">Courses</button>
+                <div class="dropdown-content">
+                    <div class="course">
+                        <button onclick="toggleLessons('course1')">▶ Welcome to DF Dynamics</button>
+                        <div id="course1" class="lessons" style="display:none;">
+                            <button onclick="showVideo('Introduction', 'lesson1')">Introduction</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course">
+                        <button onclick="toggleLessons('course2')">▶ Prompting Methods</button>
+                        <div id="course2" class="lessons" style="display:none;">
+                            <button onclick="showVideo('Prompt Basics', 'lesson2')">Prompt Basics</button>
+                            <button onclick="showVideo('Advanced Prompting', 'lesson3')">Advanced Prompting</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course">
+                        <button onclick="toggleLessons('course3')">▶ Text Editor Setup</button>
+                        <div id="course3" class="lessons" style="display:none;">
+                            <button onclick="showVideo('Installing Editor', 'lesson4')">Installing Editor</button>
+                            <button onclick="showVideo('Customization', 'lesson5')">Customization</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="container">
-        <h2>Course Dashboard</h2>
+        <!-- Video Section -->
+        <section id="videoContainer" style="display:none;">
+            <h2 id="videoTitle"></h2>
+            <iframe id="videoFrame" width="560" height="315" allowfullscreen></iframe>
+        </section>
 
-        <!-- Topic 1 -->
-        <div class="topic" onclick="toggleLessons('welcome')">Welcome to DF Dynamics</div>
-        <div id="welcome" class="lessons">
-            <div class="lesson" onclick="showVideo('Welcome to DF Dynamics', 'lesson1')">Introduction Video <span id="lesson1-status"></span></div>
-        </div>
-
-        <!-- Topic 2 -->
-        <div class="topic" onclick="toggleLessons('prompting')">Prompting Methods</div>
-        <div id="prompting" class="lessons">
-            <div class="lesson" onclick="showVideo('What is Prompting?', 'lesson2')" id="lesson2" disabled>What is Prompting? <span id="lesson2-status"></span></div>
-            <div class="lesson" onclick="showVideo('Advanced Prompting', 'lesson3')" id="lesson3" disabled>Advanced Prompting <span id="lesson3-status"></span></div>
-        </div>
-
-        <!-- Topic 3 -->
-        <div class="topic" onclick="toggleLessons('editor')">Text Editor Setup</div>
-        <div id="editor" class="lessons">
-            <div class="lesson" onclick="showVideo('Setting Up Your Editor', 'lesson4')" id="lesson4" disabled>Setting Up Your Editor <span id="lesson4-status"></span></div>
-            <div class="lesson" onclick="showVideo('Customizing Editor', 'lesson5')" id="lesson5" disabled>Customizing Your Editor <span id="lesson5-status"></span></div>
-        </div>
-
-        <!-- Video and Quiz Section -->
-        <div id="videoContainer" class="video-container">
-            <h3 id="videoTitle"></h3>
-            <iframe id="videoFrame" allowfullscreen></iframe>
-            <br><br>
-            <button onclick="completeLesson()">Mark as Completed</button>
-        </div>
-
-        <div id="quizContainer" class="quiz-container">
-            <h3>Quiz</h3>
-            <p id="quizQuestion"></p>
-            <button onclick="checkAnswer(true)">✔ True</button>
-            <button onclick="checkAnswer(false)">❌ False</button>
-        </div>
-
-        <div id="certificateContainer" style="display:none;">
+        <!-- Certificate Section -->
+        <section id="certificateContainer" style="display:none;">
             <h2>🎉 Congratulations!</h2>
             <p>You have completed all lessons and quizzes!</p>
             <button onclick="generateCertificate()">Download Certificate</button>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <script>
-        const loggedInEmployee = localStorage.getItem("loggedInEmployee");
-        if (!loggedInEmployee) {
-            window.location.href = "index.html"; 
-        } else {
-            document.getElementById("employeeName").innerText = loggedInEmployee;
+        function toggleLessons(courseId) {
+            let course = document.getElementById(courseId);
+            course.style.display = (course.style.display === "block") ? "none" : "block";
         }
 
-        function toggleLessons(topicId) {
-            const lessonsDiv = document.getElementById(topicId);
-            lessonsDiv.style.display = (lessonsDiv.style.display === "block") ? "none" : "block";
+        function getVideoUrl(lessonId) {
+            const videoLinks = {
+                "lesson1": "https://www.youtube.com/embed/YOUR_VIDEO_ID1",
+                "lesson2": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
+                "lesson3": "https://www.youtube.com/embed/YOUR_VIDEO_ID3",
+                "lesson4": "https://www.youtube.com/embed/YOUR_VIDEO_ID4",
+                "lesson5": "https://www.youtube.com/embed/YOUR_VIDEO_ID5"
+            };
+            return videoLinks[lessonId] || "";
         }
 
-        let currentLesson = "";
         function showVideo(title, lessonId) {
             document.getElementById("videoTitle").innerText = title;
             document.getElementById("videoFrame").src = getVideoUrl(lessonId);
             document.getElementById("videoContainer").style.display = "block";
-            document.getElementById("quizContainer").style.display = "none";
-            currentLesson = lessonId;
-        }
-
-        function completeLesson() {
-            if (currentLesson) {
-                localStorage.setItem(currentLesson, "completed");
-                updateLessonStatus();
-                alert("Lesson marked as completed!");
-                unlockNextLesson(currentLesson);
-                showQuiz();
-            }
-        }
-
-        function showQuiz() {
-            const quizQuestions = {
-                "lesson1": "Is DF Dynamics a training platform?",
-                "lesson2": "Prompting means structuring your questions?",
-                "lesson3": "Advanced prompting is not useful?",
-                "lesson4": "Text editors help developers?",
-                "lesson5": "Customizing an editor improves workflow?"
-            };
-            document.getElementById("quizQuestion").innerText = quizQuestions[currentLesson];
-            document.getElementById("quizContainer").style.display = "block";
-        }
-
-        function checkAnswer(answer) {
-            if (answer) {
-                localStorage.setItem(currentLesson + "-quiz", "passed");
-                updateLessonStatus();
-                alert("Quiz passed!");
-                unlockNextLesson(currentLesson + "-quiz");
-                checkAllCompleted();
-            } else {
-                alert("Wrong answer! Try again.");
-            }
-        }
-
-        function updateLessonStatus() {
-            const lessons = ["lesson1", "lesson2", "lesson3", "lesson4", "lesson5"];
-            lessons.forEach(lesson => {
-                if (localStorage.getItem(lesson) === "completed") {
-                    document.getElementById(`${lesson}-status`).innerText = "✔ Completed";
-                    document.getElementById(lesson).classList.add("completed");
-                }
-            });
-        }
-
-        function unlockNextLesson(lessonId) {
-            const lessonOrder = ["lesson1", "lesson2", "lesson3", "lesson4", "lesson5"];
-            const index = lessonOrder.indexOf(lessonId.replace("-quiz", ""));
-            if (index !== -1 && index < lessonOrder.length - 1) {
-                const nextLesson = lessonOrder[index + 1];
-                document.getElementById(nextLesson).removeAttribute("disabled");
-            }
-        }
-
-        function checkAllCompleted() {
-            const allCompleted = ["lesson1-quiz", "lesson2-quiz", "lesson3-quiz", "lesson4-quiz", "lesson5-quiz"]
-                .every(quiz => localStorage.getItem(quiz) === "passed");
-            if (allCompleted) {
-                document.getElementById("certificateContainer").style.display = "block";
-            }
         }
 
         function generateCertificate() {
-            alert("Certificate Downloaded! (Feature Coming Soon)");
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(22);
+            doc.text("Certificate of Completion", 105, 40, null, null, "center");
+            const employeeName = localStorage.getItem("loggedInEmployee") || "Employee";
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(16);
+            doc.text(`This certifies that`, 105, 60, null, null, "center");
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18);
+            doc.text(`${employeeName}`, 105, 80, null, null, "center");
+            doc.text("has completed DF Dynamics Training.", 105, 100, null, null, "center");
+            const date = new Date().toLocaleDateString();
+            doc.text(`Date: ${date}`, 105, 130, null, null, "center");
+            doc.text("DF Dynamics Training Team", 105, 160, null, null, "center");
+            doc.save(`Certificate_${employeeName}.pdf`);
         }
-
-        function logout() {
-            localStorage.removeItem("loggedInEmployee");
-            window.location.href = "index.html"; 
-        }
-
-        updateLessonStatus();
     </script>
+
+    <!-- Quiz Section -->
+<section id="quizContainer" style="display:none;">
+    <h2 id="quizTitle"></h2>
+    <div id="quizQuestions"></div>
+    <button onclick="submitQuiz()">Submit Quiz</button>
+</section>
+
+<script>
+    let progress = JSON.parse(localStorage.getItem("employeeProgress")) || {};
+    let currentLesson = "";
+
+    const quizzes = {
+        "lesson1": {
+            title: "Introduction Quiz",
+            questions: [
+                { question: "What is DF Dynamics?", options: ["A company", "A game", "A movie"], answer: 0 },
+                { question: "What do you learn here?", options: ["Hacking", "Training", "Cooking"], answer: 1 }
+            ]
+        },
+        "lesson2": {
+            title: "Prompt Basics Quiz",
+            questions: [
+                { question: "What is a prompt?", options: ["A command", "A file", "A password"], answer: 0 },
+                { question: "Where do we use prompts?", options: ["Food industry", "AI & Programming", "Farming"], answer: 1 }
+            ]
+        }
+    };
+
+    function showQuiz(lessonId) {
+        if (!quizzes[lessonId]) return;
+        currentLesson = lessonId;
+        document.getElementById("quizTitle").innerText = quizzes[lessonId].title;
+        const quizDiv = document.getElementById("quizQuestions");
+        quizDiv.innerHTML = "";
+
+        quizzes[lessonId].questions.forEach((q, i) => {
+            let html = `<p>${q.question}</p>`;
+            q.options.forEach((option, index) => {
+                html += `<input type="radio" name="q${i}" value="${index}"> ${option}<br>`;
+            });
+            quizDiv.innerHTML += html;
+        });
+
+        document.getElementById("videoContainer").style.display = "none";
+        document.getElementById("quizContainer").style.display = "block";
+    }
+
+    function submitQuiz() {
+        const questions = quizzes[currentLesson].questions;
+        let correct = 0;
+
+        questions.forEach((q, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && parseInt(selected.value) === q.answer) {
+                correct++;
+            }
+        });
+
+        if (correct === questions.length) {
+            alert("✅ Quiz Passed!");
+            progress[currentLesson] = true;
+            localStorage.setItem("employeeProgress", JSON.stringify(progress));
+            checkCompletion();
+        } else {
+            alert("❌ Some answers are incorrect. Try again.");
+        }
+    }
+
+    function checkCompletion() {
+        const allLessons = Object.keys(quizzes);
+        const completed = allLessons.every(lesson => progress[lesson]);
+        
+        if (completed) {
+            document.getElementById("certificateContainer").style.display = "block";
+        }
+    }
+</script>
 
 </body>
 </html>
