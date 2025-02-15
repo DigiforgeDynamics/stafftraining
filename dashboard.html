@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <a href="courses.html">Courses</a>
-
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
         .container { max-width: 600px; margin: auto; }
-        .dropdown { width: 100%; padding: 10px; font-size: 16px; margin: 10px 0; }
+        .topic { background: #007bff; color: white; padding: 10px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
+        .lessons { display: none; padding: 10px; background: #f1f1f1; border-radius: 5px; }
+        .lesson { cursor: pointer; color: #007bff; text-decoration: underline; margin: 5px 0; }
         .video-container { display: none; margin-top: 20px; }
-        button { padding: 10px 15px; background: #dc3545; color: white; border: none; cursor: pointer; margin-top: 10px; }
-        button:hover { background: #c82333; }
+        iframe { width: 100%; height: 250px; }
+        button { padding: 10px 15px; background: #28a745; color: white; border: none; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #218838; }
     </style>
 </head>
 <body>
@@ -22,20 +22,34 @@
     <button onclick="logout()">Logout</button>
 
     <div class="container">
-        <h3>Select a Course</h3>
+        <h2>Course Dashboard</h2>
 
-        <!-- Dropdown Menu -->
-        <select id="courseDropdown" class="dropdown" onchange="showVideo()">
-            <option value="">-- Select a Course --</option>
-            <option value="welcome">Welcome to DF Dynamics</option>
-            <option value="prompting">Prompting Methods</option>
-            <option value="editor">Text Editor Setup</option>
-        </select>
+        <!-- Topic 1 -->
+        <div class="topic" onclick="toggleLessons('welcome')">Welcome to DF Dynamics</div>
+        <div id="welcome" class="lessons">
+            <div class="lesson" onclick="showVideo('Welcome to DF Dynamics', 'https://www.youtube.com/embed/6gbsNi0n0ME')">Introduction Video</div>
+        </div>
 
-        <!-- Video Sections (Initially Hidden) -->
+        <!-- Topic 2 -->
+        <div class="topic" onclick="toggleLessons('prompting')">Prompting Methods</div>
+        <div id="prompting" class="lessons">
+            <div class="lesson" onclick="showVideo('What is Prompting?', 'https://www.youtube.com/embed/9UqI3R2ut2c')">What is Prompting?</div>
+            <div class="lesson" onclick="showVideo('Advanced Prompting', 'https://www.youtube.com/embed/Y76EQrD2ozE')">Advanced Prompting</div>
+        </div>
+
+        <!-- Topic 3 -->
+        <div class="topic" onclick="toggleLessons('editor')">Text Editor Setup</div>
+        <div id="editor" class="lessons">
+            <div class="lesson" onclick="showVideo('Setting Up Your Editor', 'https://www.youtube.com/embed/Y76EQrD2ozE')">Setting Up Your Editor</div>
+            <div class="lesson" onclick="showVideo('Customizing Editor', 'https://www.youtube.com/embed/6gbsNi0n0ME')">Customizing Your Editor</div>
+        </div>
+
+        <!-- Video and Test Section -->
         <div id="videoContainer" class="video-container">
-            <h4 id="videoTitle"></h4>
-            <iframe id="videoFrame" width="100%" height="250" src="" allowfullscreen></iframe>
+            <h3 id="videoTitle"></h3>
+            <iframe id="videoFrame" allowfullscreen></iframe>
+            <br><br>
+            <button onclick="startTest()">Take Test</button>
         </div>
     </div>
 
@@ -43,36 +57,29 @@
         // Check if user is logged in
         const loggedInEmployee = localStorage.getItem("loggedInEmployee");
         if (!loggedInEmployee) {
-            window.location.href = "index.html"; // Redirect back to login if not logged in
+            window.location.href = "index.html"; // Redirect to login if not logged in
         } else {
             document.getElementById("employeeName").innerText = loggedInEmployee;
         }
 
         function logout() {
             localStorage.removeItem("loggedInEmployee");
-            window.location.href = "index.html"; // Redirect to login page
+            window.location.href = "index.html"; // Redirect to login
         }
 
-        function showVideo() {
-            const dropdown = document.getElementById("courseDropdown").value;
-            const videoContainer = document.getElementById("videoContainer");
-            const videoTitle = document.getElementById("videoTitle");
-            const videoFrame = document.getElementById("videoFrame");
+        function toggleLessons(topicId) {
+            const lessonsDiv = document.getElementById(topicId);
+            lessonsDiv.style.display = (lessonsDiv.style.display === "block") ? "none" : "block";
+        }
 
-            // Video URLs
-            const videos = {
-                "welcome": { title: "Welcome to DF Dynamics", url: "https://www.youtube.com/embed/6gbsNi0n0ME" },
-                "prompting": { title: "Prompting Methods", url: "https://www.youtube.com/embed/9UqI3R2ut2c" },
-                "editor": { title: "Text Editor Setup", url: "https://www.youtube.com/embed/Y76EQrD2ozE" }
-            };
+        function showVideo(title, videoUrl) {
+            document.getElementById("videoTitle").innerText = title;
+            document.getElementById("videoFrame").src = videoUrl;
+            document.getElementById("videoContainer").style.display = "block";
+        }
 
-            if (dropdown) {
-                videoContainer.style.display = "block";
-                videoTitle.innerText = videos[dropdown].title;
-                videoFrame.src = videos[dropdown].url;
-            } else {
-                videoContainer.style.display = "none";
-            }
+        function startTest() {
+            alert("Test feature coming soon!");
         }
     </script>
 
