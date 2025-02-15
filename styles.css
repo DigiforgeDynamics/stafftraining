@@ -1,46 +1,91 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     text-align: center;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    width: 350px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 50px auto;
+/* Navbar */
+.navbar {
+    background: #007bff;
+    padding: 15px;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-h2 {
-    color: #333;
+/* Logout Button */
+.logout-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.form-group {
-    margin-bottom: 15px;
+/* Course Dropdown */
+.course-dropdown {
+    margin-top: 20px;
 }
 
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
+.dropdown-btn {
+    padding: 12px 20px;
+    font-size: 16px;
     background: #28a745;
     color: white;
     border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    margin: auto;
     border-radius: 5px;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Video and Quiz Sections */
+#videoContainer, #quizContainer {
+    display: none;
+    margin-top: 20px;
+}
+
+iframe {
+    width: 80%;
+    height: 350px;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 15px;
+    border: none;
     cursor: pointer;
 }
 
-button:hover {
-    background: #218838;
+.quiz-btn {
+    background: #ffc107;
+    color: black;
 }
