@@ -123,19 +123,28 @@ video {
     border-radius: 10px;
 }
 
-/* Back Button */
-.back-button {
-    display: block;
-    width: fit-content;
-    margin: 20px auto;
-    padding: 10px 15px;
+//* Back to Dashboard & Logout Button Fix */
+.back-button, .logout-button {
+    display: inline-block;  /* Make the button width fit the text */
+    padding: 10px 20px;  /* Adjust padding for better sizing */
+    font-size: 16px;
     text-decoration: none;
     background-color: #007bff;
     color: white;
     border-radius: 5px;
     text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.back-button:hover {
+.back-button:hover, .logout-button:hover {
     background-color: #0056b3;
 }
+
+/* Ensure button doesn't stretch */
+.back-button, .logout-button {
+    width: auto;
+    min-width: 120px; /* Set a reasonable minimum width */
+}
+
