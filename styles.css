@@ -150,4 +150,21 @@ button.back-btn {
     background: #007bff;
     color: white;
     border: none;
-    pad
+  
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Adjust height to center video properly */
+    margin: 0 auto;
+}
+
+video {
+    max-width: 90%;
+    height: auto;
+    border: 3px solid #007bff;
+    border-radius: 10px;
+}
+
+
