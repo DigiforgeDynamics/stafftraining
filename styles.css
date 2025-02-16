@@ -125,17 +125,14 @@ video {
 
 //* Back to Dashboard & Logout Button Fix */
 .back-button, .logout-button {
-    display: inline-block;  /* Make the button width fit the text */
-    padding: 10px 20px;  /* Adjust padding for better sizing */
-    font-size: 16px;
-    text-decoration: none;
+      width: 100%;
+    padding: 10px;
     background-color: #007bff;
     color: white;
-    border-radius: 5px;
-    text-align: center;
     border: none;
     cursor: pointer;
-    transition: background 0.3s;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 .back-button:hover, .logout-button:hover {
