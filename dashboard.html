@@ -3,59 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Staff Training</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Dashboard | Staff Training</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>📚 Staff Training Portal</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-    </header>
+    <!-- User Profile Dropdown -->
+    <div class="user-profile">
+        <div class="user-icon" onclick="toggleDropdown()">👤</div>
+        <div class="dropdown-content" id="userDropdown">
+            <p id="userName">Employee Name</p>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
 
-    <div class="course-container">
-        <h2>Available Courses</h2>
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <h2>Welcome to DF Dynamics Training</h2>
+        <p>Select a course to begin learning.</p>
 
-        <!-- Chapter 1 -->
-        <div class="chapter">
-            <button class="collapsible">📘 Welcome to DF Dynamics</button>
-            <div class="content">
-                <a href="video.html?lesson=intro">Introduction</a>
-                <a href="video.html?lesson=overview">Course Overview</a>
-            </div>
+        <!-- Collapsible Course Sections -->
+        <button class="collapsible">Chapter 1: Introduction</button>
+        <div class="course-content">
+            <p><a href="video.html?lesson=intro">Welcome to DF Dynamics</a></p>
+            <p><a href="video.html?lesson=prompting">Prompting Methods</a></p>
+            <p><a href="video.html?lesson=editor">Text Editor Setup</a></p>
         </div>
 
-        <!-- Chapter 2 -->
-        <div class="chapter">
-            <button class="collapsible">📘 Prompting Methods</button>
-            <div class="content">
-                <a href="video.html?lesson=what-is-prompting">What is Prompting?</a>
-                <a href="video.html?lesson=types-of-prompts">Types of Prompts</a>
-            </div>
+        <button class="collapsible">Chapter 2: Advanced Topics</button>
+        <div class="course-content">
+            <p><a href="video.html?lesson=security">Cybersecurity Basics</a></p>
+            <p><a href="video.html?lesson=ai">AI in Business</a></p>
         </div>
 
-        <!-- Chapter 3 -->
-        <div class="chapter">
-            <button class="collapsible">📘 Text Editor Setup</button>
-            <div class="content">
-                <a href="video.html?lesson=install-vscode">Installing VS Code</a>
-                <a href="video.html?lesson=editor-shortcuts">Useful Shortcuts</a>
-            </div>
+        <button class="collapsible">Chapter 3: Hands-On Training</button>
+        <div class="course-content">
+            <p><a href="video.html?lesson=project">Real-World Project</a></p>
+            <p><a href="video.html?lesson=testing">Testing Methods</a></p>
         </div>
-
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Collapsible Functionality
-        document.querySelectorAll(".collapsible").forEach(button => {
-            button.addEventListener("click", function() {
-                this.classList.toggle("active");
-                let content = this.nextElementSibling;
-                content.style.display = content.style.display === "block" ? "none" : "block";
-            });
-        });
-    </script>
-
 </body>
 </html>
