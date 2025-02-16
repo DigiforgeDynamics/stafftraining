@@ -6,7 +6,7 @@
 }
 
 .logo {
-    width: 80px;
+    width: 70px;
     height: auto;
 }
 
@@ -34,9 +34,13 @@ body {
 header {
     background-color: #007bff;
     color: white;
-    padding: 15px;
+    padding: 10px 20px; /* Reduce padding */
     text-align: center;
-    font-size: 24px;
+    font-size: 20px; /* Adjust font size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between logo and text */
 }
 
 /* 📌 LOGIN PAGE STYLES */
