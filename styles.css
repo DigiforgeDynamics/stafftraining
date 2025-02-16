@@ -1,13 +1,3 @@
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between logo and text */
-}
-
-.logo {
-    width: 60px; /* Adjust logo size */
-    height: auto;
-}
 /* General Styles */
 * {
     margin: 0;
@@ -21,52 +11,55 @@ body {
     color: #333;
 }
 
-/* Header */
+/* 📌 HEADER */
 header {
     background-color: #007bff;
     color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 24px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
 }
 
-/* 📌 LOGIN PAGE STYLES */
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 100px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* Logo & Company Name */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.login-container h2 {
-    margin-bottom: 20px;
+.logo {
+    width: 60px;
+    height: auto;
 }
 
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Staff Training - Centered */
+.staff-training {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: bold;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+/* Logout Button - Top Right */
+.logout-btn {
+    background: red;
     color: white;
     border: none;
+    padding: 10px 15px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 10px;
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
 }
 
-button:hover {
-    background-color: #0056b3;
+.logout-btn:hover {
+    background: darkred;
 }
 
 /* 📌 DASHBOARD STYLES */
@@ -83,6 +76,7 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* Collapsible Course Sections */
 .collapsible {
     width: 100%;
     background-color: #007bff;
@@ -100,6 +94,7 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Collapsible Content */
 .content {
     display: none;
     padding: 10px;
@@ -133,23 +128,7 @@ video {
     border-radius: 10px;
 }
 
-//* Back to Dashboard & Logout Button Fix */
-.logout-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: red;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.logout-btn:hover {
-    background: darkred;
-}
-
+/* Back Button */
 button.back-btn {
     display: block;
     width: 200px;
