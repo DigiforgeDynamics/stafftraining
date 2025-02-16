@@ -5,78 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Training Video</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        header {
-            background: #007bff;
-            color: white;
-            padding: 15px;
-            font-size: 22px;
-            font-weight: bold;
-        }
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        iframe {
-            width: 70%;
-            max-width: 720px;
-            height: 400px;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-        }
-        .back-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #f8f9fa;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .back-button:hover {
-            background: #e2e6ea;
-        }
-    </style>
 </head>
 <body>
 
-    <header>Training Video</header>
-    
-    <button class="back-button" onclick="goBack()">⬅ Back to Dashboard</button>
+    <header>
+        <h1>Training Video</h1>
+        <button onclick="goBack()">← Back to Dashboard</button>
+    </header>
 
     <div class="video-container">
-        <iframe id="trainingVideo" frameborder="0" allowfullscreen></iframe>
+        <iframe id="videoFrame" width="800" height="450" frameborder="0" allowfullscreen></iframe>
     </div>
 
     <script>
-        function getVideoURL() {
-            const params = new URLSearchParams(window.location.search);
-            let videoID = params.get("video");  // Get video ID from URL
-            if (videoID) {
-                return "https://www.youtube.com/embed/" + videoID;  // Convert to embed format
-            }
-            return "";
+        // Function to get URL parameters
+        function getVideoID() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('video');
         }
 
-        function loadVideo() {
-            const videoURL = getVideoURL();
-            if (videoURL) {
-                document.getElementById("trainingVideo").src = videoURL;
-            } else {
-                document.querySelector(".video-container").innerHTML = "<p>No video selected.</p>";
-            }
-        }
+        // Set video source
+        document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + getVideoID();
 
+        // Back button function
         function goBack() {
             window.location.href = "dashboard.html";
         }
-
-        window.onload = loadVideo;
     </script>
 
 </body>
