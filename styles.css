@@ -1,190 +1,169 @@
 /* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color: #333;
+    background-color: #f4f4f4;
 }
 
-/* Centered Container */
+/* Container to center content */
 .container {
     width: 90%;
-    max-width: 500px;
-    margin: 50px auto;
+    max-width: 900px;
+    margin: auto;
     padding: 20px;
     background: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 5px;
+}
+
+/* Header */
+header {
+    background: #2C3E50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ===================== LOGIN PAGE STYLES ===================== */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
     text-align: center;
 }
 
-/* Login Form */
-.login-form h2 {
-    margin-bottom: 15px;
+.login-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2C3E50;
+    margin-bottom: 20px;
 }
 
-input[type="text"], input[type="password"] {
-    width: 90%;
-    padding: 10px;
+.login-input {
+    width: 100%;
+    padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
-button {
+.login-button {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background: #0073AA;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Error Message */
-#error-msg {
-    color: red;
+    border-radius: 5px;
     margin-top: 10px;
 }
 
-//* General Styling */
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+.login-button:hover {
+    background: #005F8C;
 }
 
-/* User Info & Logout */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* ===================== DASHBOARD STYLES ===================== */
+
+/* User Profile Section */
 .user-info {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: #333;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 15px;
+    background: #ecf0f1;
 }
 
-.user-info span {
-    font-weight: bold;
-    font-size: 18px;
+.user-info img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
-button {
-    background-color: #008CBA;
+/* Logout Button */
+.logout-btn {
+    background: #c0392b;
     color: white;
-    padding: 8px 12px;
     border: none;
+    padding: 8px 15px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: 0.3s;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
-button:hover {
-    background-color: #005f73;
+.logout-btn:hover {
+    background: #a93226;
 }
 
-/* Heading */
+/* Main Heading */
 h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 15px;
+    text-align: center;
+    color: #2C3E50;
+    margin-top: 20px;
 }
 
-p {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-/* Collapsible Course Sections */
-.collapsible {
-    background-color: #4CAF50;
+/* Chapters */
+.chapter-btn {
+    background: #2980B9;
     color: white;
-    cursor: pointer;
+    border: none;
     padding: 10px;
     width: 100%;
-    border: none;
     text-align: left;
-    outline: none;
     font-size: 16px;
-    margin: 5px 0;
-    transition: background-color 0.3s ease;
-    border-radius: 4px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.collapsible:hover {
-    background-color: #45a049;
+.chapter-btn:hover {
+    background: #1F618D;
 }
 
-.collapsible:after {
-    content: ' ▼'; /* Dropdown indicator */
-    float: right;
-}
-
-.collapsible.active:after {
-    content: ' ▲'; /* Changes when clicked */
-}
-
-.content {
+/* Chapter Content (Hidden by Default) */
+.chapter-content {
     display: none;
-    padding: 10px;
-    background: white;
-    border-left: 4px solid #4CAF50;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    padding-left: 15px;
 }
 
-/* Video Links */
-a {
+/* Course Links */
+.course-link {
     display: block;
     text-decoration: none;
-    color: #007BFF;
+    color: #2980B9;
     font-size: 16px;
     padding: 5px 0;
-    transition: 0.2s;
 }
 
-a:hover {
+.course-link:hover {
     text-decoration: underline;
-    color: #0056b3;
 }
 
-/* User Dropdown */
-.user-dropdown {
-    position: relative;
-    display: inline-block;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    overflow: hidden;
-}
+    .chapter-btn {
+        font-size: 14px;
+    }
 
-.dropdown-content a {
-    color: black;
-    padding: 10px;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-.show {
-    display: block;
+    .login-container {
+        width: 90%;
+    }
 }
