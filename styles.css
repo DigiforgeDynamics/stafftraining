@@ -54,101 +54,114 @@ button:hover {
     margin-top: 10px;
 }
 
-/* Dashboard Styles */
-.dashboard-container {
-    width: 90%;
-    max-width: 900px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+//* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* User Info & Logout */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.user-info span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button {
+    background-color: #008CBA;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #005f73;
+}
+
+/* Heading */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 /* Collapsible Course Sections */
 .collapsible {
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     cursor: pointer;
-    padding: 12px;
+    padding: 10px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 18px;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    font-size: 16px;
+    margin: 5px 0;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
 }
 
 .collapsible:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 
-.collapsible.active {
-    background-color: #0056b3;
+.collapsible:after {
+    content: ' ▼'; /* Dropdown indicator */
+    float: right;
 }
 
-.course-content {
+.collapsible.active:after {
+    content: ' ▲'; /* Changes when clicked */
+}
+
+.content {
     display: none;
     padding: 10px;
-    background: #f1f1f1;
-    border-radius: 5px;
-    margin-top: 5px;
-}
-
-/* Video Page */
-.video-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-iframe {
-    width: 100%;
-    max-width: 800px;
-    height: 450px;
-    border: none;
-    border-radius: 8px;
-}
-
-/* Quiz Section */
-.quiz-container {
-    display: none;
-    text-align: center;
     background: white;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-left: 4px solid #4CAF50;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
-.quiz-container label {
+/* Video Links */
+a {
     display: block;
-    font-size: 18px;
-    margin: 10px 0;
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 16px;
+    padding: 5px 0;
+    transition: 0.2s;
 }
 
-.quiz-container button {
-    margin-top: 10px;
+a:hover {
+    text-decoration: underline;
+    color: #0056b3;
 }
 
-/* User Profile Dropdown */
-.user-profile {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.user-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #007bff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
+/* User Dropdown */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
@@ -156,43 +169,22 @@ iframe {
     position: absolute;
     right: 0;
     background-color: white;
+    min-width: 160px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    width: 180px;
-    z-index: 1;
+    overflow: hidden;
 }
 
-.dropdown-content p {
+.dropdown-content a {
+    color: black;
     padding: 10px;
-    margin: 0;
-    text-align: center;
-}
-
-.dropdown-content button {
-    width: 100%;
-    padding: 10px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-.dropdown-content button:hover {
-    background: darkred;
-}
-
-/* Show Dropdown */
-.show {
     display: block;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .container, .dashboard-container {
-        width: 95%;
-    }
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
 
-    iframe {
-        height: 300px;
-    }
+.show {
+    display: block;
 }
