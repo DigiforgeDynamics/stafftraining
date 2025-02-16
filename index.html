@@ -3,45 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Login</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        .login-container { max-width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
-        input { width: 100%; padding: 10px; margin: 5px 0; }
-        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; }
-        button:hover { background: #218838; }
-    </style>
+    <title>Login - Staff Training</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Redirect logged-in users to dashboard
+        if (localStorage.getItem("loggedInUser")) {
+            window.location.href = "dashboard.html";
+        }
+    </script>
 </head>
 <body>
 
-    <h2>Employee Login</h2>
     <div class="login-container">
-        <input type="text" id="employeeID" placeholder="Enter Employee ID" required>
-        <input type="password" id="password" placeholder="Enter Password" required>
+        <h2>🔐 Employee Login</h2>
+        <input type="text" id="employeeId" placeholder="Employee ID" required>
+        <input type="password" id="password" placeholder="Password" required>
         <button onclick="login()">Login</button>
-        <p id="error-msg" style="color: red;"></p>
     </div>
 
-    <script>
-        // Predefined employee credentials (You can add more employees here)
-        const employees = {
-            "emp001": "password123",
-            "emp002": "securepass",
-            "emp003": "training2024"
-        };
-
-        function login() {
-            const employeeID = document.getElementById("employeeID").value;
-            const password = document.getElementById("password").value;
-
-            if (employees[employeeID] && employees[employeeID] === password) {
-                localStorage.setItem("loggedInEmployee", employeeID);
-                window.location.href = "dashboard.html"; // Redirect to dashboard
-            } else {
-                document.getElementById("error-msg").innerText = "Invalid Employee ID or Password";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
