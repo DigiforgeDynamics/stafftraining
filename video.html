@@ -3,25 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Video</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Lesson Video</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <header>
+        <h1 id="lessonTitle">📺 Lesson</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
     <div class="video-container">
-        <h2 id="videoTitle">Video Title</h2>
-        <iframe id="videoFrame" allowfullscreen></iframe>
+        <iframe id="videoFrame" width="800" height="450" frameborder="0" allowfullscreen></iframe>
     </div>
 
-    <!-- Quiz Section -->
-    <div class="quiz-container" id="quizContainer">
-        <h3>Quiz</h3>
-        <p id="quizQuestion">What did you learn?</p>
-        <label><input type="radio" name="answer" value="correct"> Correct Answer</label>
-        <label><input type="radio" name="answer" value="wrong"> Wrong Answer</label>
+    <div class="quiz-container">
+        <h3>📜 Quiz (Must Complete to Proceed)</h3>
+        <p>What is the main topic of this lesson?</p>
+        <input type="text" id="quizAnswer" placeholder="Your answer here">
         <button onclick="submitQuiz()">Submit</button>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        const videoLinks = {
+            "intro": "https://www.youtube.com/embed/YOUR_VIDEO_ID1",
+            "overview": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
+            "what-is-prompting": "https://www.youtube.com/embed/YOUR_VIDEO_ID3",
+            "types-of-prompts": "https://www.youtube.com/embed/YOUR_VIDEO_ID4",
+            "install-vscode": "https://www.youtube.com/embed/YOUR_VIDEO_ID5",
+            "editor-shortcuts": "https://www.youtube.com/embed/YOUR_VIDEO_ID6"
+        };
+
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        const lesson = getQueryParam("lesson");
+        if (lesson && videoLinks[lesson]) {
+            document.getElementById("lessonTitle").innerText = lesson.replace("-", " ");
+            document.getElementById("videoFrame").src = videoLinks[lesson];
+        } else {
+            document.body.innerHTML = "<h2>Invalid Lesson</h2>";
+        }
+
+        function submitQuiz() {
+            alert("Quiz Submitted! You can now proceed.");
+        }
+    </script>
+
 </body>
 </html>
