@@ -124,24 +124,37 @@ video {
 }
 
 //* Back to Dashboard & Logout Button Fix */
-.back-button, .logout-button {
-      width: 100px;
-    padding: 10px;
-    background-color: #007bff;
+.logout-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: red;
     color: white;
     border: none;
+    padding: 10px 15px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 10px;
 }
 
-.back-button:hover, .logout-button:hover {
-    background-color: #0056b3;
+.logout-btn:hover {
+    background: darkred;
 }
 
-/* Ensure button doesn't stretch */
-.back-button, .logout-button {
-    width: 100px;
-  height: 50px; /* Set a reasonable minimum width */
+button.back-btn {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+button.back-btn:hover {
+    background: #0056b3;
 }
 
