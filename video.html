@@ -56,7 +56,11 @@
     <script>
         function getVideoURL() {
             const params = new URLSearchParams(window.location.search);
-            return params.get("video") || "";
+            let videoID = params.get("video");  // Get video ID from URL
+            if (videoID) {
+                return "https://www.youtube.com/embed/" + videoID;  // Convert to embed format
+            }
+            return "";
         }
 
         function loadVideo() {
