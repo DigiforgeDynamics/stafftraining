@@ -1,9 +1,9 @@
-// 🚀 Redirect logged-in users from index.html to dashboard.html
+// Redirect logged-in users from index.html to dashboard.html
 if (window.location.pathname.includes("index.html") && localStorage.getItem("loggedInUser")) {
     window.location.href = "dashboard.html";
 }
 
-// ✅ Login Function
+// Login Function
 function login() {
     const employeeId = document.getElementById("employeeId").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -31,29 +31,32 @@ function login() {
     }
 }
 
-// 🚪 Logout Function
+// Logout Function
 function logout() {
     localStorage.removeItem("loggedInUser");
     window.location.href = "index.html";
 }
 
-// 📌 Collapsible Course Sections
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".collapsible").forEach(button => {
-        button.addEventListener("click", function () {
+// Collapsible Course Sections
+document.addEventListener("DOMContentLoaded", function() {
+    const coll = document.querySelectorAll(".collapsible");
+
+    coll.forEach(button => {
+        button.addEventListener("click", function() {
             this.classList.toggle("active");
             let content = this.nextElementSibling;
             content.style.display = content.style.display === "block" ? "none" : "block";
         });
     });
+
+    updateUserName(); // Update user info on dashboard load
 });
 
-// 👤 User Profile Dropdown
+// User Profile Dropdown
 function toggleDropdown() {
-    document.getElementById("userDropdown").classList.toggle("show");
+    document.getElementById("user-dropdown").classList.toggle("show");
 }
 
-// 📝 Update User Name on Dashboard
 function updateUserName() {
     let userId = localStorage.getItem("loggedInUser");
     const userNames = {
@@ -61,15 +64,15 @@ function updateUserName() {
         "E002": "Jane Smith",
         "E003": "Alice Johnson"
     };
-    document.getElementById("user-name").textContent = "Logged in as: " + (userNames[userId] || "Employee");
+    document.getElementById("user-name").textContent = userNames[userId] || "Employee";
 }
 
-// 📺 Redirect User to Video Page on Click
+// Redirect User to Video Page on Click
 function goToVideo(lessonId) {
     window.location.href = `video.html?lesson=${lessonId}`;
 }
 
-// 📌 Handle Video Display
+// Handle Video Display
 const params = new URLSearchParams(window.location.search);
 const lessonId = params.get("lesson");
 
@@ -88,32 +91,43 @@ if (lessonId && document.getElementById("videoFrame")) {
     document.getElementById("videoFrame").src = videoLinks[lessonId] || "";
 }
 
-// 📝 Quiz Handling - Show Quiz After Video
+// Show Quiz After Video
 const quizContainer = document.getElementById("quizContainer");
 setTimeout(() => {
     if (quizContainer) quizContainer.style.display = "block";
 }, 5000); // Show quiz after 5 sec
 
-// ✅ Ensure Quiz is Mandatory Before Next Video
+// Handle Quiz Submission
 function submitQuiz() {
+    alert("Quiz submitted successfully!");
+}
+
+// Ensure Quiz is Mandatory Before Next Video
+function showQuiz() {
+    document.getElementById("quizContainer").style.display = "block";
+}
+
+// Check if Quiz is Passed
+function checkQuiz() {
     let answer = document.querySelector('input[name="quiz"]:checked');
     if (answer && answer.value === "correct") {
         alert("✅ Correct! You may proceed.");
         document.getElementById("quizContainer").style.display = "none";
-        document.getElementById("courseContainer").style.display = "block"; // Show course list again
+        document.getElementById("courseContainer").style.display = "block"; // Show course dropdown again
     } else {
         alert("❌ Incorrect. Try again.");
     }
 }
 
-// 📌 Hide Course Dropdown When Video Appears
-function showVideo(title, lessonId) {
-    document.getElementById("videoTitle").innerText = title;
-    document.getElementById("videoFrame").src = videoLinks[lessonId] || "";
-    document.getElementById("videoContainer").style.display = "block";
-    document.getElementById("quizContainer").style.display = "none";
-    document.getElementById("courseContainer").style.display = "none"; // Hide course list
+// Close Dropdown when Clicking Outside
+window.onclick = function(event) {
+    if (!event.target.matches('.user-icon')) {
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
 }
-
-// 🔄 Initialize User Info on Dashboard
-window.onload = updateUserName;
