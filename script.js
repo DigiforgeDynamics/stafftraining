@@ -94,3 +94,40 @@ function loadVideo() {
 if (window.location.pathname.includes("video.html")) {
     window.onload = loadVideo;
 }
+
+// Wait until the DOM is fully loaded before adding event listeners
+document.addEventListener("DOMContentLoaded", function () {
+    // Ensure collapsible sections work
+    document.querySelectorAll(".collapsible").forEach(button => {
+        button.addEventListener("click", function () {
+            this.classList.toggle("active");
+            let content = this.nextElementSibling;
+
+            // Toggle visibility with a smooth effect
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    });
+
+    // Update User Info on Dashboard
+    updateUserName();
+});
+
+// Update User's Name in the Dashboard
+function updateUserName() {
+    let userId = localStorage.getItem("loggedInUser");
+    const userNames = {
+        "E001": "John Doe",
+        "E002": "Jane Smith",
+        "E003": "Alice Johnson"
+    };
+    let userElement = document.createElement("div");
+    userElement.className = "user-info";
+    userElement.innerHTML = `<span>👤 ${userNames[userId] || "Employee"}</span>`;
+
+    document.querySelector("header").appendChild(userElement);
+}
+
