@@ -46,6 +46,7 @@ header {
 /* Logout Button - Top Right */
 .logout-btn {
     background: red;
+    width: 10%;
     color: white;
     border: none;
     padding: 10px 15px;
