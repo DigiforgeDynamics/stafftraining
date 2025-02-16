@@ -20,8 +20,8 @@
         <div class="chapter">
             <button class="collapsible">📘 Welcome to DF Dynamics</button>
             <div class="content">
-        <a href="video.html?video=videos/training-video-1.mp4" target="_blank">Introduction</a>
-        <a href="video.html?video=videos/training-video-2.mp4" target="_blank">Course Overview</a>
+                <a href="video.html?video=videos/training-video-1.mp4" target="_blank">Introduction</a>
+                <a href="video.html?video=videos/training-video-2.mp4" target="_blank">Course Overview</a>
             </div>
         </div>
 
@@ -29,8 +29,8 @@
         <div class="chapter">
             <button class="collapsible">📘 Prompting Methods</button>
             <div class="content">
-                <a href="video.html?video=https://www.youtube.com/embed/awu9x7ZTieo">What is Prompting?</a>
-                <a href="video.html?video=https://www.youtube.com/embed/awu9x7ZTieo">Types of Prompts</a>
+                <a href="video.html?video=videos/training-video-3.mp4" target="_blank">What is Prompting?</a>
+                <a href="video.html?video=videos/training-video-4.mp4" target="_blank">Types of Prompts</a>
             </div>
         </div>
 
@@ -38,8 +38,8 @@
         <div class="chapter">
             <button class="collapsible">📘 Text Editor Setup</button>
             <div class="content">
-                <a href="video.html?video=https://www.youtube.com/embed/awu9x7ZTieo">Installing VS Code</a>
-                <a href="video.html?video=https://www.youtube.com/embed/awu9x7ZTieo">Useful Shortcuts</a>
+                <a href="video.html?video=videos/training-video-5.mp4" target="_blank">Installing VS Code</a>
+                <a href="video.html?video=videos/training-video-6.mp4" target="_blank">Useful Shortcuts</a>
             </div>
         </div>
 
@@ -56,6 +56,12 @@
                 content.style.display = content.style.display === "block" ? "none" : "block";
             });
         });
+
+        // Logout Function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "index.html"; // Redirect to login
+        }
     </script>
 
 </body>
