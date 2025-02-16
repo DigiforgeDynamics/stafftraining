@@ -1,3 +1,13 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and text */
+}
+
+.logo {
+    width: 60px; /* Adjust logo size */
+    height: auto;
+}
 /* General Styles */
 * {
     margin: 0;
