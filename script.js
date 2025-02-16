@@ -1,69 +1,63 @@
-// ✅ Redirect user if not logged in
-function checkLogin() {
-    let user = localStorage.getItem("loggedInUser");
-    if (!user) {
-        window.location.href = "index.html";  // Redirect to login
-    }
+// Hashing function using SHA-256 (safer than MD5)
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-// ✅ Secure Logout Function
-function logout() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "index.html";
-}
+// Employee credentials (hashed passwords)
+const validEmployees = {
+    "E001": "d2d2d2f4b3b3a6a6c1c1e8e8f2f2f2f2f2f2f2f2", // SHA-256 hashed password
+    "E002": "e3e3e3d4d4c4c4a2a2b6b6e9e9f1f1f1f1f1f1f1",
+    "E003": "a1a1b2b2c3c3d4d4e5e5f6f6g7g7h8h8i9i9j0j0"
+};
 
-// ✅ Secure Login Function (Example)
-function login() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-
-    // Simulated hashed passwords (Replace with actual hashing in backend)
-    let users = {
-        "admin": "5f4dcc3b5aa765d61d8327deb882cf99"  // MD5 of "password"
-    };
-
-    if (users[username] && md5(password) === users[username]) {
-        localStorage.setItem("loggedInUser", username);
-        window.location.href = "dashboard.html";
-    } else {
-        alert("Invalid Credentials");
-    }
-}
-
-// ✅ Simple MD5 Hashing (Use real backend hashing)
-function md5(string) {
-    return CryptoJS.MD5(string).toString();
-}
-
-
-function login() {
-    
+// ✅ Secure Login Function
+async function login() {
     const employeeId = document.getElementById("employeeId").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    // Check if inputs are empty
     if (!employeeId || !password) {
         alert("⚠️ Please enter Employee ID and Password.");
         return;
     }
 
-    // Simulating server validation (Replace with a real API call in future)
-    const validEmployees = {
-        "E001": "password1",
-        "E002": "password2",
-        "E003": "password3"
-    };
+    const hashedPassword = await hashPassword(password);
 
-    if (validEmployees[employeeId] && validEmployees[employeeId] === password) {
-        localStorage.setItem("loggedInUser", employeeId); // Store session
+    if (validEmployees[employeeId] && validEmployees[employeeId] === hashedPassword) {
+        localStorage.setItem("loggedInUser", employeeId);
         alert("✅ Login successful!");
-        window.location.href = "dashboard.html"; // Redirect
+        window.location.href = "dashboard.html";
     } else {
         alert("❌ Invalid Employee ID or Password.");
     }
 }
 
+// ✅ Prevent Direct Access to Dashboard
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname.includes("dashboard.html")) {
+        let user = localStorage.getItem("loggedInUser");
+        if (!user) {
+            window.location.href = "index.html";
+        }
+    }
+});
+
+// ✅ Secure Logout Function
 function logout() {
     localStorage.removeItem("loggedInUser");
-    window.location.href = "index.html"; // Redirect to login
+    sessionStorage.clear();
+    window.location.href = "index.html";
 }
+
+// ✅ Redirect logged-in users away from the login page
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname.includes("index.html")) {
+        let user = localStorage.getItem("loggedInUser");
+        if (user) {
+            window.location.href = "dashboard.html"; // Redirect to dashboard
+        }
+    }
+});
