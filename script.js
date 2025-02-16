@@ -1,14 +1,16 @@
 function login() {
     const employeeId = document.getElementById("employeeId").value.trim();
     const password = document.getElementById("password").value.trim();
+    const errorMsg = document.getElementById("error-msg");
 
-    // Check if inputs are empty
+    // Clear previous error message
+    errorMsg.textContent = "";
+
     if (!employeeId || !password) {
-        alert("⚠️ Please enter Employee ID and Password.");
+        errorMsg.textContent = "⚠️ Please enter Employee ID and Password.";
         return;
     }
 
-    // Simulating server validation (Replace with a real API call in future)
     const validEmployees = {
         "E001": "password1",
         "E002": "password2",
@@ -16,15 +18,9 @@ function login() {
     };
 
     if (validEmployees[employeeId] && validEmployees[employeeId] === password) {
-        localStorage.setItem("loggedInUser", employeeId); // Store session
-        alert("✅ Login successful!");
-        window.location.href = "dashboard.html"; // Redirect
+        localStorage.setItem("loggedInUser", employeeId);
+        window.location.href = "dashboard.html"; // Smooth redirect without alert
     } else {
-        alert("❌ Invalid Employee ID or Password.");
+        errorMsg.textContent = "❌ Invalid Employee ID or Password.";
     }
-}
-
-function logout() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "index.html"; // Redirect to login
 }
