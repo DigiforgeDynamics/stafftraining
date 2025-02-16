@@ -1,95 +1,198 @@
-/* Collapsible Chapters */
-
-.login-container {
-    width: 300px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
-input {
+/* Centered Container */
+.container {
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Login Form */
+.login-form h2 {
+    margin-bottom: 15px;
+}
+
+input[type="text"], input[type="password"] {
     width: 90%;
     padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background: #28a745;
+    padding: 12px;
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-size: 18px;
     cursor: pointer;
 }
 
 button:hover {
-    background: #218838;
+    background-color: #0056b3;
 }
 
-.error-text {
+/* Error Message */
+#error-msg {
     color: red;
-    font-size: 14px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
+/* Dashboard Styles */
+.dashboard-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Collapsible Course Sections */
 .collapsible {
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    padding: 15px;
+    padding: 12px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
     font-size: 18px;
-    transition: 0.4s;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
-.active, .collapsible:hover {
+.collapsible:hover {
     background-color: #0056b3;
 }
 
-.content {
+.collapsible.active {
+    background-color: #0056b3;
+}
+
+.course-content {
     display: none;
     padding: 10px;
-    background-color: #f9f9f9;
-}
-
-.content a {
-    display: block;
-    padding: 10px;
-    color: #333;
-    text-decoration: none;
-    border-bottom: 1px solid #ddd;
-}
-
-.content a:hover {
-    background-color: #e9e9e9;
-}
-
-/* Logout Button */
-.logout-btn {
-    background: red;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    float: right;
-}
-
-.logout-btn:hover {
-    background: darkred;
+    background: #f1f1f1;
+    border-radius: 5px;
+    margin-top: 5px;
 }
 
 /* Video Page */
 .video-container {
     text-align: center;
     margin-top: 20px;
+}
+
+iframe {
+    width: 100%;
+    max-width: 800px;
+    height: 450px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Quiz Section */
+.quiz-container {
+    display: none;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-container label {
+    display: block;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.quiz-container button {
+    margin-top: 10px;
+}
+
+/* User Profile Dropdown */
+.user-profile {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: 180px;
+    z-index: 1;
+}
+
+.dropdown-content p {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+}
+
+.dropdown-content button {
+    width: 100%;
+    padding: 10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.dropdown-content button:hover {
+    background: darkred;
+}
+
+/* Show Dropdown */
+.show {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container, .dashboard-container {
+        width: 95%;
+    }
+
+    iframe {
+        height: 300px;
+    }
 }
