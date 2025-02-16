@@ -1,22 +1,3 @@
-/* Logo and Header */
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo {
-    width: 70px;
-    height: auto;
-}
-
-/* Logout & Back Button Fix */
-.logout-button, .back-button {
-    width: auto;
-    min-width: 120px;
-    padding: 10px 20px;
-}
-
 /* General Styles */
 * {
     margin: 0;
@@ -34,13 +15,9 @@ body {
 header {
     background-color: #007bff;
     color: white;
-    padding: 10px 20px; /* Reduce padding */
+    padding: 15px;
     text-align: center;
-    font-size: 20px; /* Adjust font size */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Space between logo and text */
+    font-size: 24px;
 }
 
 /* 📌 LOGIN PAGE STYLES */
@@ -146,7 +123,7 @@ video {
     border-radius: 10px;
 }
 
-/* Back to Dashboard & Logout Button Fix */
+//* Back to Dashboard & Logout Button Fix */
 .logout-btn {
     position: absolute;
     top: 15px;
@@ -180,4 +157,3 @@ button.back-btn {
 button.back-btn:hover {
     background: #0056b3;
 }
-v
