@@ -1,43 +1,28 @@
-let currentLesson = null;
-let completedQuizzes = {};
-
-const videoLinks = {
-    "lesson1": "https://www.youtube.com/embed/YOUR_VIDEO_ID1",
-    "lesson2": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
-    "lesson3": "https://www.youtube.com/embed/YOUR_VIDEO_ID3",
-    "lesson4": "https://www.youtube.com/embed/YOUR_VIDEO_ID4"
+const users = {
+    "E001": "password1",
+    "E002": "password2",
+    "E003": "password3"
 };
 
-function toggleDropdown() {
-    const dropdown = document.getElementById("dropdownMenu");
-    dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+// Redirect if already logged in
+if (localStorage.getItem("loggedInUser")) {
+    window.location.href = "dashboard.html";
 }
 
-function showVideo(title, lessonId) {
-    if (!completedQuizzes[lessonId]) {
-        document.getElementById("videoTitle").innerText = title;
-        document.getElementById("videoFrame").src = videoLinks[lessonId] || "";
-        document.getElementById("videoContainer").style.display = "block";
-        document.getElementById("quizContainer").style.display = "none";
-        document.getElementById("dropdownMenu").style.display = "none"; // Hide dropdown
-        currentLesson = lessonId;
+function login() {
+    const employeeId = document.getElementById("employeeId").value;
+    const password = document.getElementById("password").value;
+
+    if (users[employeeId] && users[employeeId] === password) {
+        localStorage.setItem("loggedInUser", employeeId); // Store session
+        alert("Login successful!");
+        window.location.href = "dashboard.html"; // Redirect to dashboard
     } else {
-        alert("You must complete the quiz before moving on.");
+        alert("Invalid Employee ID or Password.");
     }
 }
 
-function showQuiz() {
-    document.getElementById("videoContainer").style.display = "none";
-    document.getElementById("quizContainer").style.display = "block";
-}
-
-function submitQuiz() {
-    alert("Quiz completed! You can now access the next video.");
-    completedQuizzes[currentLesson] = true;
-    document.getElementById("quizContainer").style.display = "none";
-}
-
 function logout() {
-    alert("Logged out successfully!");
+    localStorage.removeItem("loggedInUser");
     window.location.href = "index.html"; // Redirect to login page
 }
