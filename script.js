@@ -1,9 +1,9 @@
-// Redirect logged-in users from index.html to dashboard.html
+// 🚀 Redirect logged-in users from index.html to dashboard.html
 if (window.location.pathname.includes("index.html") && localStorage.getItem("loggedInUser")) {
     window.location.href = "dashboard.html";
 }
 
-// Login Function
+// ✅ Login Function
 function login() {
     const employeeId = document.getElementById("employeeId").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -31,18 +31,16 @@ function login() {
     }
 }
 
-// Logout Function
+// 🚪 Logout Function
 function logout() {
     localStorage.removeItem("loggedInUser");
     window.location.href = "index.html";
 }
 
-// Collapsible Course Sections
-document.addEventListener("DOMContentLoaded", function() {
-    const coll = document.querySelectorAll(".collapsible");
-
-    coll.forEach(button => {
-        button.addEventListener("click", function() {
+// 📌 Collapsible Course Sections
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".collapsible").forEach(button => {
+        button.addEventListener("click", function () {
             this.classList.toggle("active");
             let content = this.nextElementSibling;
             content.style.display = content.style.display === "block" ? "none" : "block";
@@ -50,11 +48,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// User Profile Dropdown
+// 👤 User Profile Dropdown
 function toggleDropdown() {
-    document.getElementById("user-dropdown").classList.toggle("show");
+    document.getElementById("userDropdown").classList.toggle("show");
 }
 
+// 📝 Update User Name on Dashboard
 function updateUserName() {
     let userId = localStorage.getItem("loggedInUser");
     const userNames = {
@@ -65,48 +64,56 @@ function updateUserName() {
     document.getElementById("user-name").textContent = "Logged in as: " + (userNames[userId] || "Employee");
 }
 
-// Redirect User to Video Page on Click
+// 📺 Redirect User to Video Page on Click
 function goToVideo(lessonId) {
     window.location.href = `video.html?lesson=${lessonId}`;
 }
 
-// Get Video URL Based on Lesson ID
-function getVideoUrl(lessonId) {
-    const videoLinks = {
-        "intro": "https://www.youtube.com/embed/YOUR_VIDEO_ID1",
-        "setup": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
-        "deep-learning": "https://www.youtube.com/embed/YOUR_VIDEO_ID3",
-        "examples": "https://www.youtube.com/embed/YOUR_VIDEO_ID4"
-    };
-    return videoLinks[lessonId] || "";
+// 📌 Handle Video Display
+const params = new URLSearchParams(window.location.search);
+const lessonId = params.get("lesson");
+
+const videoLinks = {
+    "intro": "https://www.youtube.com/embed/YOUR_VIDEO_ID1",
+    "prompting": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
+    "editor": "https://www.youtube.com/embed/YOUR_VIDEO_ID3",
+    "security": "https://www.youtube.com/embed/YOUR_VIDEO_ID4",
+    "ai": "https://www.youtube.com/embed/YOUR_VIDEO_ID5",
+    "project": "https://www.youtube.com/embed/YOUR_VIDEO_ID6",
+    "testing": "https://www.youtube.com/embed/YOUR_VIDEO_ID7"
+};
+
+if (lessonId && document.getElementById("videoFrame")) {
+    document.getElementById("videoTitle").innerText = lessonId.replace("-", " ");
+    document.getElementById("videoFrame").src = videoLinks[lessonId] || "";
 }
 
-// Show Video & Hide Course Dropdown
-function showVideo(title, lessonId) {
-    document.getElementById("videoTitle").innerText = title;
-    document.getElementById("videoFrame").src = getVideoUrl(lessonId);
-    document.getElementById("videoContainer").style.display = "block";
-    document.getElementById("quizContainer").style.display = "none";
-    document.getElementById("courseContainer").style.display = "none"; // Hide course dropdown
-    currentLesson = lessonId;
-}
+// 📝 Quiz Handling - Show Quiz After Video
+const quizContainer = document.getElementById("quizContainer");
+setTimeout(() => {
+    if (quizContainer) quizContainer.style.display = "block";
+}, 5000); // Show quiz after 5 sec
 
-// Ensure Quiz is Mandatory Before Next Video
-function showQuiz() {
-    document.getElementById("quizContainer").style.display = "block";
-}
-
-// Check if Quiz is Passed
-function checkQuiz() {
+// ✅ Ensure Quiz is Mandatory Before Next Video
+function submitQuiz() {
     let answer = document.querySelector('input[name="quiz"]:checked');
     if (answer && answer.value === "correct") {
         alert("✅ Correct! You may proceed.");
         document.getElementById("quizContainer").style.display = "none";
-        document.getElementById("courseContainer").style.display = "block"; // Show course dropdown again
+        document.getElementById("courseContainer").style.display = "block"; // Show course list again
     } else {
         alert("❌ Incorrect. Try again.");
     }
 }
 
-// Initialize User Info on Dashboard
+// 📌 Hide Course Dropdown When Video Appears
+function showVideo(title, lessonId) {
+    document.getElementById("videoTitle").innerText = title;
+    document.getElementById("videoFrame").src = videoLinks[lessonId] || "";
+    document.getElementById("videoContainer").style.display = "block";
+    document.getElementById("quizContainer").style.display = "none";
+    document.getElementById("courseContainer").style.display = "none"; // Hide course list
+}
+
+// 🔄 Initialize User Info on Dashboard
 window.onload = updateUserName;
