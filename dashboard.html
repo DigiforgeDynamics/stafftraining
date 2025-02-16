@@ -3,25 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Header -->
-    <header>
-        <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="logo">
-            <h1>DigiforgeDynamics</h1>
-        </div>
-        <span class="staff-training">Staff Training</span>
-        <a href="#" class="logout-btn">Logout</a>
-    </header>
+    <title>Dashboard - DigiforgeDynamics</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
 <body onload="checkLogin()">
 
-    <div class="logo-container">
-        <img src="https://i.ibb.co/9m7rdLW1/cropped-image.png" alt="Logo" class="logo">
-        <h1>DigiforgeDynamics</h1>
-    </div>
-    <span class="staff-training">Staff Training</span>
-    <a href="#" class="logout">Logout</a>
-</header>
-
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="DigiforgeDynamics Logo" class="logo">
+            <h1>📚 DigiforgeDynamics Training Portal</h1>
+        </div>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
 
     <div class="course-container">
         <h2>Available Courses</h2>
