@@ -1,4 +1,4 @@
-/* General Styles */
+/* 📌 GENERAL STYLES */
 * {
     margin: 0;
     padding: 0;
@@ -60,6 +60,55 @@ header {
 
 .logout-btn:hover {
     background: darkred;
+}
+
+/* 📌 LOGIN PAGE STYLES */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Error Message */
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 /* 📌 DASHBOARD STYLES */
