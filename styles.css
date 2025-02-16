@@ -56,11 +56,14 @@ header {
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
+    font-size: 16px;
 }
 
 .logout-btn:hover {
     background: darkred;
 }
+
+
 
 /* 📌 LOGIN PAGE STYLES */
 .login-container {
