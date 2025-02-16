@@ -1,3 +1,22 @@
+
+/* Logo and Header */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+}
+
+/* Logout & Back Button Fix */
+.logout-button, .back-button {
+    width: auto;
+    min-width: 120px;
+    padding: 10px 20px;
+}
 /* General Styles */
 * {
     margin: 0;
