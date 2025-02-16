@@ -1,4 +1,3 @@
-
 /* Logo and Header */
 .logo-container {
     display: flex;
@@ -17,6 +16,7 @@
     min-width: 120px;
     padding: 10px 20px;
 }
+
 /* General Styles */
 * {
     margin: 0;
@@ -142,7 +142,7 @@ video {
     border-radius: 10px;
 }
 
-//* Back to Dashboard & Logout Button Fix */
+/* Back to Dashboard & Logout Button Fix */
 .logout-btn {
     position: absolute;
     top: 15px;
@@ -176,4 +176,4 @@ button.back-btn {
 button.back-btn:hover {
     background: #0056b3;
 }
-
+v
