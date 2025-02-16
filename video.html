@@ -1,0 +1,47 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Video</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your main CSS file -->
+</head>
+<body>
+    <header>
+        <h1>Training Video</h1>
+        <button onclick="goBack()">⬅ Back to Dashboard</button>
+    </header>
+
+    <main>
+        <div id="video-container">
+            <iframe id="trainingVideo" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </main>
+
+    <script>
+        // Function to get the video URL from query parameters
+        function getVideoURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("video") || ""; // Default to empty if no video is provided
+        }
+
+        // Function to set the video URL in the iframe
+        function loadVideo() {
+            const videoURL = getVideoURL();
+            if (videoURL) {
+                document.getElementById("trainingVideo").src = videoURL;
+            } else {
+                document.getElementById("video-container").innerHTML = "<p>No video selected.</p>";
+            }
+        }
+
+        // Function to go back to the dashboard
+        function goBack() {
+            window.location.href = "dashboard.html";
+        }
+
+        // Load the video on page load
+        window.onload = loadVideo;
+    </script>
+</body>
+</html>
