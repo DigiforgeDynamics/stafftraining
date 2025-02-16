@@ -3,43 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Training Portal</title>
+    <title>Dashboard - Staff Training</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="navbar">
-        <span>📚 Staff Training Portal</span>
+    <header>
+        <h1>📚 Staff Training Portal</h1>
         <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
+    </header>
 
-    <!-- Course Dropdown -->
-    <div class="course-dropdown">
-        <button class="dropdown-btn" onclick="toggleDropdown()">Show Courses ⬇</button>
-        <div id="dropdownMenu" class="dropdown-content">
-            <a href="#" onclick="showVideo('Introduction', 'lesson1')">Introduction</a>
-            <a href="#" onclick="showVideo('Lesson 2', 'lesson2')">Lesson 2</a>
-            <a href="#" onclick="showVideo('Lesson 3', 'lesson3')">Lesson 3</a>
-            <a href="#" onclick="showVideo('Lesson 4', 'lesson4')">Lesson 4</a>
+    <div class="course-container">
+        <h2>Available Courses</h2>
+
+        <!-- Chapter 1 -->
+        <div class="chapter">
+            <button class="collapsible">📘 Welcome to DF Dynamics</button>
+            <div class="content">
+                <a href="video.html?lesson=intro">Introduction</a>
+                <a href="video.html?lesson=overview">Course Overview</a>
+            </div>
         </div>
-    </div>
 
-    <!-- Video Player -->
-    <div id="videoContainer">
-        <h3 id="videoTitle"></h3>
-        <iframe id="videoFrame" frameborder="0" allowfullscreen></iframe>
-        <br>
-        <button class="btn quiz-btn" onclick="showQuiz()">Take Quiz</button>
-    </div>
+        <!-- Chapter 2 -->
+        <div class="chapter">
+            <button class="collapsible">📘 Prompting Methods</button>
+            <div class="content">
+                <a href="video.html?lesson=what-is-prompting">What is Prompting?</a>
+                <a href="video.html?lesson=types-of-prompts">Types of Prompts</a>
+            </div>
+        </div>
 
-    <!-- Quiz Section -->
-    <div id="quizContainer">
-        <h3>Quiz</h3>
-        <p>Sample Question: What is AI?</p>
-        <button class="btn" onclick="submitQuiz()">Submit Answer</button>
+        <!-- Chapter 3 -->
+        <div class="chapter">
+            <button class="collapsible">📘 Text Editor Setup</button>
+            <div class="content">
+                <a href="video.html?lesson=install-vscode">Installing VS Code</a>
+                <a href="video.html?lesson=editor-shortcuts">Useful Shortcuts</a>
+            </div>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Collapsible Functionality
+        document.querySelectorAll(".collapsible").forEach(button => {
+            button.addEventListener("click", function() {
+                this.classList.toggle("active");
+                let content = this.nextElementSibling;
+                content.style.display = content.style.display === "block" ? "none" : "block";
+            });
+        });
+    </script>
 
 </body>
 </html>
