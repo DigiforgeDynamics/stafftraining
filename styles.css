@@ -46,7 +46,8 @@ header {
 /* Logout Button - Top Right */
 .logout-btn {
     background: red;
-    width: 10%;
+    width: auto;  /* Prevents it from being too small */
+    min-width: 100px; /* Ensures a readable button */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -64,7 +65,26 @@ header {
     background: darkred;
 }
 
+/* 📌 BUTTON STYLES */
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+}
 
+/* Login Button (Full Width) */
+.login-btn {
+    width: 100%;  /* Full width */
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
 
 /* 📌 LOGIN PAGE STYLES */
 .login-container {
@@ -90,22 +110,6 @@ input[type="text"], input[type="password"] {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-button {
-    width: 10%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 /* Error Message */
