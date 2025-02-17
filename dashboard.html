@@ -14,7 +14,7 @@
             <img src="https://i.ibb.co/9m7rdLW1/cropped-image.png" alt="DigiforgeDynamics Logo" class="logo">
             <h1>📚 DigiforgeDynamics Training Portal</h1>
         </div>
-        <button class="logout-button" onclick="logout()">Logout</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </header>
 
     <div class="course-container">
@@ -24,8 +24,8 @@
         <div class="chapter">
             <button class="collapsible">📘 Welcome to DF Dynamics</button>
             <div class="content">
-                <a href="video.html?video=videos/training-video.mp4" >Introduction</a>
-                <a href="video.html?video=videos/training-video.mp4" >Course Overview</a>
+                <a href="video.html?video=videos/training-video.mp4">Introduction</a>
+                <a href="video.html?video=videos/training-video.mp4">Course Overview</a>
             </div>
         </div>
 
@@ -33,8 +33,8 @@
         <div class="chapter">
             <button class="collapsible">📘 Prompting Methods</button>
             <div class="content">
-                <a href="video.html?video=videos/training-video.mp4" >What is Prompting?</a>
-                <a href="video.html?video=videos/training-video.mp4" >Types of Prompts</a>
+                <a href="video.html?video=videos/training-video.mp4">What is Prompting?</a>
+                <a href="video.html?video=videos/training-video.mp4">Types of Prompts</a>
             </div>
         </div>
 
@@ -42,11 +42,10 @@
         <div class="chapter">
             <button class="collapsible">📘 Text Editor Setup</button>
             <div class="content">
-                <a href="video.html?video=videos/training-video-5.mp4" >Installing VS Code</a>
-                <a href="video.html?video=videos/training-video-6.mp4" >Useful Shortcuts</a>
+                <a href="video.html?video=videos/training-video-5.mp4">Installing VS Code</a>
+                <a href="video.html?video=videos/training-video-6.mp4">Useful Shortcuts</a>
             </div>
         </div>
-
     </div> <!-- ✅ This properly closes `.course-container` -->
 
     <script src="script.js"></script>
@@ -54,7 +53,7 @@
     <script>
         // Collapsible Functionality
         document.querySelectorAll(".collapsible").forEach(button => {
-            button.addEventListener("click", function() {
+            button.addEventListener("click", function () {
                 this.classList.toggle("active");
                 let content = this.nextElementSibling;
                 content.style.display = content.style.display === "block" ? "none" : "block";
