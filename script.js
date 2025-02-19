@@ -27,7 +27,7 @@ function login() {
     const validEmployees = {
         "E001": "5f4dcc3b5aa765d61d8327deb882cf99", 
         "E002": "e99a18c428cb38d5f260853678922e03", 
-        "E003": "098f6bcd4621d373cade4e832627b4f6"  
+        "114568": "098f6bcd4621d373cade4e832627b4f6"  
     };
 
     if (validEmployees[employeeId] && md5(password) === validEmployees[employeeId]) {
