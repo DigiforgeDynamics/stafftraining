@@ -1,9 +1,10 @@
-// ✅ Secure Login with MD5 Employee ID Hashing & SHA-256 Password Hashing
+// ✅ Secure Login with AES Encryption & SHA-256 Hashing
 const users = {
-    "e79a7dfd6d5ed9f0e5e06893f168f3bb": "b92601b743a636aa3545105be7388f9738eb771fbb269a6aa888bbf9b8dbb0b4" 
+    "8661c52c2a4eb274b3cf57b49e12cf93": "aef81753d80bc1d3c1894413f708b5c5cf36cd8cf1b5dd2f78fa0dbb5a8c1e62" 
+    // ID: "167485", Password: "DFDUSEr@123"
 };
 
-// ✅ Hash function for SHA-256 (Passwords)
+// ✅ Hash function for SHA-256
 function hash(text) {
     return CryptoJS.SHA256(text).toString();
 }
@@ -14,52 +15,45 @@ function encryptID(id) {
 }
 
 // ✅ Brute-force protection
-let attempts = parseInt(sessionStorage.getItem("loginAttempts")) || 0;
-const maxAttempts = 5;
 const lockoutTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+let attempts = parseInt(sessionStorage.getItem("loginAttempts")) || 0;
 
 function login() {
     const employeeId = document.getElementById("employeeId").value.trim();
     const password = document.getElementById("password").value.trim();
     const errorMessage = document.getElementById("error-message");
 
-    if (!employeeId || !password) {
-        errorMessage.innerText = "❌ Employee ID and Password required.";
-        return;
-    }
-
-    // Check if user is locked out
+    // Check if locked out
     const lockout = sessionStorage.getItem("lockoutTime");
     if (lockout && Date.now() - parseInt(lockout) < lockoutTime) {
         errorMessage.innerText = "🚫 Too many failed attempts. Try again later.";
         return;
     }
 
+    if (!employeeId || !password) {
+        errorMessage.innerText = "❌ Employee ID and Password required.";
+        return;
+    }
+
     const encryptedId = encryptID(employeeId);
     const hashedPassword = hash(password);
-
-    // Debugging logs (check in browser console: F12 > Console)
-    console.log("Entered ID (MD5):", encryptedId);
-    console.log("Entered Password (SHA-256):", hashedPassword);
 
     if (users[encryptedId] && users[encryptedId] === hashedPassword) {
         sessionStorage.setItem("authToken", encryptedId);
         sessionStorage.removeItem("loginAttempts"); // Reset attempts
-        sessionStorage.removeItem("lockoutTime"); // Remove lockout if user logs in successfully
+        sessionStorage.removeItem("lockoutTime");  // Remove lockout
         window.location.href = "dashboard.html";
     } else {
         attempts++;
         sessionStorage.setItem("loginAttempts", attempts);
-        errorMessage.innerText = `❌ Invalid Employee ID or Password. (Attempts left: ${maxAttempts - attempts})`;
+        errorMessage.innerText = `❌ Invalid Employee ID or Password. (Attempts left: ${5 - attempts})`;
 
-        if (attempts >= maxAttempts) {
-            sessionStorage.setItem("lockoutTime", Date.now());
-            errorMessage.innerText = "🚫 Too many failed attempts. Try again in 10 minutes.";
-            sessionStorage.removeItem("loginAttempts"); // Reset attempts
+        if (attempts >= 5) {
+            sessionStorage.setItem("lockoutTime", Date.now()); // Set lockout timestamp
+            errorMessage.innerText = "🚫 Too many failed attempts. Try again after 10 minutes.";
         }
     }
 }
-
 
 // ✅ Redirect if Already Logged In
 function redirectIfLoggedIn() {
@@ -79,6 +73,13 @@ function checkLogin() {
 function logout() {
     sessionStorage.removeItem("authToken");
     window.location.href = "index.html";
+}
+
+// ✅ Reset Login Attempts (For Testing)
+function resetLoginAttempts() {
+    sessionStorage.removeItem("loginAttempts");
+    sessionStorage.removeItem("lockoutTime");
+    alert("Login attempts have been reset!");
 }
 
 // ✅ Collapsible Course Sections
