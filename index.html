@@ -6,7 +6,6 @@
     <title>Login - Staff Training</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Redirect logged-in users to dashboard
         if (localStorage.getItem("loggedInUser")) {
             window.location.href = "dashboard.html";
         }
@@ -16,14 +15,13 @@
 
     <div class="login-container">
         <h2>🔐 Employee Login</h2>
-        <input type="text" id="employeeId" placeholder="Employee ID" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <input type="text" id="employeeId" placeholder="Employee ID">
+        <input type="password" id="password" placeholder="Password">
         <button onclick="login()">Login</button>
-        <p id="error-message" class="error-message"></p> <!-- Error message display -->
+        <p id="error-message" class="error-message"></p>
     </div>
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script src="script.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
