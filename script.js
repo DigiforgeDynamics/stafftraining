@@ -25,9 +25,9 @@ function login() {
 
     // Simulated hashed passwords (use backend in real-world)
     const validEmployees = {
-        "E001": "5f4dcc3b5aa765d61d8327deb882cf99", 
-        "E002": "e99a18c428cb38d5f260853678922e03", 
-        "114568": "098f6bcd4621d373cade4e832627b4f6"  
+        "E001": "e5ca8e356625a2cabe67a275b75f50e2", 
+        "E002": "e5ca8e356625a2cabe67a275b75f50e2", 
+        "114568": "e5ca8e356625a2cabe67a275b75f50e2"  
     };
 
     if (validEmployees[employeeId] && md5(password) === validEmployees[employeeId]) {
