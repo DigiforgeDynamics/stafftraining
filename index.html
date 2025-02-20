@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Staff Training</title>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        if (localStorage.getItem("loggedInUser")) {
-            window.location.href = "dashboard.html";
-        }
-    </script>
+    <title>Secure Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input { padding: 10px; margin: 5px; }
+        button { padding: 10px; cursor: pointer; }
+        .error { color: red; }
+    </style>
 </head>
 <body>
-
-    <div class="login-container">
-        <h2>🔐 Employee Login</h2>
-        <input type="text" id="employeeId" placeholder="Employee ID">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Login</button>
-        <p id="error-message" class="error-message"></p>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="script.js"></script>
+    <h2>Login</h2>
+    <input type="text" id="employeeId" placeholder="Employee ID" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button onclick="login()">Login</button>
+    <p id="error-message" class="error"></p>
 </body>
 </html>
