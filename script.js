@@ -1,7 +1,6 @@
 // ✅ Secure Login with MD5 Employee ID Hashing & SHA-256 Password Hashing
 const users = {
-    "5d998c48c4b168de381939e7659d1b5b": "7d2706aa9642f84ae39ad6f50ee4ed8ff49e7f0a5c60e7a4bbbd5779f53ed7b7", // ID: "114568", Password: "DF@emp001"
-    "b5eae4fce75a591214f99110ec6f6e32": "5632f8c59de3e09ae3f485994c5d89a07a90dba9496f5c517c6e8dd8e46d1d9b"  // ID: "126483", Password: "DFD@p123"
+    "e79a7dfd6d5ed9f0e5e06893f168f3bb": "b92601b743a636aa3545105be7388f9738eb771fbb269a6aa888bbf9b8dbb0b4" 
 };
 
 // ✅ Hash function for SHA-256 (Passwords)
