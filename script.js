@@ -38,6 +38,10 @@ function login() {
     const encryptedId = encryptID(employeeId);
     const hashedPassword = hash(password);
 
+    // Debugging logs (check in browser console: F12 > Console)
+    console.log("Entered ID (MD5):", encryptedId);
+    console.log("Entered Password (SHA-256):", hashedPassword);
+
     if (users[encryptedId] && users[encryptedId] === hashedPassword) {
         sessionStorage.setItem("authToken", encryptedId);
         sessionStorage.removeItem("loginAttempts"); // Reset attempts
@@ -55,6 +59,7 @@ function login() {
         }
     }
 }
+
 
 // ✅ Redirect if Already Logged In
 function redirectIfLoggedIn() {
