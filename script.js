@@ -95,11 +95,8 @@ function checkLogin() {
 }
 
 function logout() {
-    sessionStorage.clear();
-    localStorage.removeItem("deviceSessionKey");
-    window.location.href = "index.html";
-    sessionStorage.removeItem("authToken");
-    window.location.href = "index.html";
+    sessionStorage.clear(); // Clear all session data
+    window.location.href = "index.html"; // Redirect to login page
 }
 
 
