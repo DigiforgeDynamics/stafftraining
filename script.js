@@ -57,7 +57,7 @@ function login() {
 
 function checkSessionTimeout() {
     const loginTime = sessionStorage.getItem("sessionTime");
-    if (loginTime && Date.now() - parseInt(loginTime) > 15 * 60 * 1000) {
+    if (loginTime && Date.now() - parseInt(loginTime) > 30 * 60 * 1000) {
         logout(); // Auto logout after 15 minutes
     }
 }
@@ -93,11 +93,12 @@ function checkLogin() {
         window.location.href = "index.html";
     }
 }
-
 function logout() {
-    sessionStorage.clear(); // Clear all session data
+    sessionStorage.removeItem("authToken"); // Remove authentication token
     window.location.href = "index.html"; // Redirect to login page
 }
+
+
 
 
 
