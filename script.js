@@ -1,6 +1,6 @@
 // ✅ Stored Hashed Credentials (SHA-256 hashed with salt)
 const users = {
-    "6bce2aed22e92ac80d61b8c3ef7dc58c": "9ef79e29225b504e0c14f5b3f3479b2d3cb07aa42e2036ae0cdbdcb42956352e"
+    "6bce2aed22e92ac80d61b8c3ef7dc58c": "89be72ec79bda481aabbf13aad37da7aeb3b8bc00137b15d2807769dc0600ac6"
 };
 
 // ✅ Security Settings
