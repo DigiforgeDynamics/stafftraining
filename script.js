@@ -93,11 +93,12 @@ function checkLogin() {
         window.location.href = "index.html";
     }
 }
-function logout() {
-    sessionStorage.removeItem("authToken"); // Remove authentication token
-    window.location.href = "index.html"; // Redirect to login page
-}
 
+ function logout() {
+    sessionStorage.clear();  // ✅ Clear all session storage data
+    localStorage.removeItem("deviceSessionKey"); // ✅ Remove device session key
+    window.location.href = "index.html"; // ✅ Redirect to login
+}
 
 
 
