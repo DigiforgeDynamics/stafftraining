@@ -1,8 +1,7 @@
-// ✅ Secure Login with AES Encryption & SHA-256 Hashing
 const users = {
-    "8661c52c2a4eb274b3cf57b49e12cf93": "aef81753d80bc1d3c1894413f708b5c5cf36cd8cf1b5dd2f78fa0dbb5a8c1e62" 
-    // ID: "167485", Password: "DFDUSEr@123"
+    "6bce2aed22e92ac80d61b8c3ef7dc58c": "89be72ec79bda481aabbf13aad37da7aeb3b8bc00137b15d2807769dc0600ac6"
 };
+
 
 // ✅ Hash function for SHA-256
 function hash(text) {
