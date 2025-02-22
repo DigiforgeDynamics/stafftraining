@@ -103,13 +103,17 @@ function logout() {
 
 
 setInterval(checkSessionTimeout, 60 * 1000);
-
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".collapsible").forEach(button => {
         button.addEventListener("click", function () {
             this.classList.toggle("active");
             let content = this.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
+
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
         });
     });
 });
