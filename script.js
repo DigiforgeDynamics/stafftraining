@@ -1,48 +1,28 @@
-// ✅ Stored Hashed Credentials (SHA-256 hashed with salt)
 const users = {
     "6bce2aed22e92ac80d61b8c3ef7dc58c": "89be72ec79bda481aabbf13aad37da7aeb3b8bc00137b15d2807769dc0600ac6"
 };
 
-// ✅ Security Settings
-const SALT = "DFD_SECURE_SALT";
-const LOCKOUT_TIME = 10 * 60 * 1000; // 10 minutes
-const MAX_ATTEMPTS = 5;
 
-// ✅ Hash function (SHA-256 with Salt)
 function hash(text) {
-    return CryptoJS.SHA256(text + SALT).toString();
+    return CryptoJS.SHA256(text).toString();
 }
 
-// ✅ Encrypt Employee ID (MD5 for quick lookup)
 function encryptID(id) {
     return CryptoJS.MD5(id).toString();
 }
 
-// ✅ AES Encryption for Session Tokens
-function encryptSession(data) {
-    return CryptoJS.AES.encrypt(data, SALT).toString();
-}
 
-// ✅ AES Decryption for Session Tokens
-function decryptSession(ciphertext) {
-    try {
-        return CryptoJS.AES.decrypt(ciphertext, SALT).toString(CryptoJS.enc.Utf8);
-    } catch {
-        return null;
-    }
-}
-
-// ✅ Brute-force Protection
-let attempts = parseInt(localStorage.getItem("loginAttempts")) || 0;
+const lockoutTime = 10 * 60 * 1000; // 10 minutes lockout
+let attempts = parseInt(sessionStorage.getItem("loginAttempts")) || 0;
 
 function login() {
     const employeeId = document.getElementById("employeeId").value.trim();
     const password = document.getElementById("password").value.trim();
     const errorMessage = document.getElementById("error-message");
 
-    // Check Lockout
-    const lockout = localStorage.getItem("lockoutTime");
-    if (lockout && Date.now() - parseInt(lockout) < LOCKOUT_TIME) {
+    // ✅ Check if locked out
+    const lockout = sessionStorage.getItem("lockoutTime");
+    if (lockout && Date.now() - parseInt(lockout) < lockoutTime) {
         errorMessage.innerText = "🚫 Too many failed attempts. Try again later.";
         return;
     }
@@ -56,53 +36,74 @@ function login() {
     const hashedPassword = hash(password);
 
     if (users[encryptedId] && users[encryptedId] === hashedPassword) {
-        const sessionToken = encryptSession(encryptedId);
-        sessionStorage.setItem("authToken", sessionToken);
-        localStorage.removeItem("loginAttempts"); // Reset attempts
-        localStorage.removeItem("lockoutTime");  // Remove lockout
+        // ✅ Prevent session hijacking
+        sessionStorage.setItem("authToken", encryptedId);
+        sessionStorage.setItem("sessionKey", generateSessionKey()); // Secure session
+        sessionStorage.setItem("sessionTime", Date.now()); // Store login time
+        sessionStorage.removeItem("loginAttempts");
+        sessionStorage.removeItem("lockoutTime");
         window.location.href = "dashboard.html";
     } else {
         attempts++;
-        localStorage.setItem("loginAttempts", attempts);
-        errorMessage.innerText = `❌ Invalid credentials. (Attempts left: ${MAX_ATTEMPTS - attempts})`;
+        sessionStorage.setItem("loginAttempts", attempts);
+        errorMessage.innerText = `❌ Invalid Employee ID or Password. (Attempts left: ${5 - attempts})`;
 
-        if (attempts >= MAX_ATTEMPTS) {
-            localStorage.setItem("lockoutTime", Date.now()); // Set lockout timestamp
+        if (attempts >= 5) {
+            sessionStorage.setItem("lockoutTime", Date.now()); // Set lockout timestamp
             errorMessage.innerText = "🚫 Too many failed attempts. Try again after 10 minutes.";
         }
     }
 }
 
+function checkSessionTimeout() {
+    const loginTime = sessionStorage.getItem("sessionTime");
+    if (loginTime && Date.now() - parseInt(loginTime) > 15 * 60 * 1000) {
+        logout(); // Auto logout after 15 minutes
+    }
+}
+
+// ✅ Prevent session hijacking
+function verifySession() {
+    const storedSessionKey = sessionStorage.getItem("sessionKey");
+    if (!storedSessionKey || storedSessionKey !== localStorage.getItem("deviceSessionKey")) {
+        logout();
+    }
+}
+
+
+function generateSessionKey() {
+    const key = CryptoJS.SHA256(Math.random().toString()).toString();
+    localStorage.setItem("deviceSessionKey", key);
+    return key;
+}
+
 // ✅ Redirect if Already Logged In
 function redirectIfLoggedIn() {
-    const token = sessionStorage.getItem("authToken");
-    if (token && decryptSession(token)) {
+    checkSessionTimeout();
+    verifySession();
+    if (sessionStorage.getItem("authToken")) {
         window.location.href = "dashboard.html";
     }
 }
 
-// ✅ Prevent Direct Access to Dashboard
 function checkLogin() {
-    const token = sessionStorage.getItem("authToken");
-    if (!token || !decryptSession(token)) {
+    checkSessionTimeout();
+    verifySession();
+    if (!sessionStorage.getItem("authToken")) {
         window.location.href = "index.html";
     }
 }
 
-// ✅ Logout Function
 function logout() {
-    sessionStorage.removeItem("authToken");
+    sessionStorage.clear();
+    localStorage.removeItem("deviceSessionKey");
     window.location.href = "index.html";
 }
 
-// ✅ Reset Login Attempts (For Testing)
-function resetLoginAttempts() {
-    localStorage.removeItem("loginAttempts");
-    localStorage.removeItem("lockoutTime");
-    alert("Login attempts have been reset!");
-}
 
-// ✅ Collapsible Course Sections
+
+setInterval(checkSessionTimeout, 60 * 1000);
+
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".collapsible").forEach(button => {
         button.addEventListener("click", function () {
