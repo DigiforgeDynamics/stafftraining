@@ -98,6 +98,8 @@ function logout() {
     sessionStorage.clear();
     localStorage.removeItem("deviceSessionKey");
     window.location.href = "index.html";
+    sessionStorage.removeItem("authToken");
+    window.location.href = "index.html";
 }
 
 
