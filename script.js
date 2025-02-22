@@ -110,10 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.toggle("active");
             let content = this.nextElementSibling;
 
-            if (content.style.display === "block") {
-                content.style.display = "none";
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null; // Close
             } else {
-                content.style.display = "block";
+                content.style.maxHeight = content.scrollHeight + "px"; // Expand
             }
         });
     });
