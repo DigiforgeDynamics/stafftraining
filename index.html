@@ -6,6 +6,12 @@
     <title>Login</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+    window.onload = function () {
+        sessionStorage.removeItem("authToken"); // Ensure user is logged out
+    };
+</script>
+
+    <script>
     if (sessionStorage.getItem("authToken")) {
         window.location.href = "dashboard.html"; // Redirect logged-in users
     }
