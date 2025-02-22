@@ -1,4 +1,4 @@
-/* 📌 GENERAL STYLES */
+/* 📌 RESET & GENERAL STYLES */
 * {
     margin: 0;
     padding: 0;
@@ -6,9 +6,11 @@
     font-family: Arial, sans-serif;
 }
 
+/* ✅ Background & Text */
 body {
-    background-color: #f4f4f4;
-    color: #333;
+    background: linear-gradient(135deg, #2c3e50, #27ae60);
+    color: white;
+    text-align: center;
 }
 
 /* 📌 HEADER */
@@ -22,7 +24,7 @@ header {
     position: relative;
 }
 
-/* Logo & Company Name */
+/* ✅ Logo & Company Name */
 .logo-container {
     display: flex;
     align-items: center;
@@ -34,7 +36,7 @@ header {
     height: auto;
 }
 
-/* Staff Training - Centered */
+/* ✅ Centered "Staff Training" Text */
 .staff-training {
     position: absolute;
     left: 50%;
@@ -43,17 +45,15 @@ header {
     font-weight: bold;
 }
 
-/* Logout Button - Top Right */
+/* ✅ Logout Button */
 .logout-btn {
     background: red;
-    width: auto;
     min-width: 100px;
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 5px;
-    text-decoration: none;
     position: absolute;
     top: 50%;
     right: 20px;
@@ -65,7 +65,46 @@ header {
     background: darkred;
 }
 
-/* 📌 BUTTON STYLES */
+/* 📌 LOGIN FORM */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #333;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+/* ✅ Input Fields */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: 2px solid #27ae60;
+}
+
+/* ✅ Error Message */
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* ✅ Buttons */
 button {
     padding: 10px;
     background-color: #007bff;
@@ -77,49 +116,16 @@ button {
     font-size: 16px;
 }
 
-/* Login Button (Full Width) */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ Full-Width Login Button */
 .login-btn {
     width: 100%;
 }
 
-.login-btn:hover {
-    background-color: #0056b3;
-}
-
-/* 📌 LOGIN PAGE STYLES */
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 100px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
-    font-size: 22px;
-    color: #333;
-}
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Error Message */
-.error-message {
-    color: red;
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-/* 📌 DASHBOARD STYLES */
+/* 📌 DASHBOARD */
 .course-container {
     width: 80%;
     margin: 30px auto;
@@ -127,13 +133,10 @@ input[type="text"], input[type="password"] {
     background: white;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
 }
 
-.chapter {
-    margin-bottom: 10px;
-}
-
-/* Collapsible Course Sections */
+/* 📌 COLLAPSIBLE SECTIONS */
 .collapsible {
     background-color: #007bff;
     color: white;
@@ -144,15 +147,23 @@ input[type="text"], input[type="password"] {
     border: none;
     border-radius: 5px;
     font-size: 16px;
+    transition: 0.3s;
+}
+
+.collapsible:hover {
+    background-color: #0056b3;
 }
 
 .collapsible.active {
-    background-color: #0056b3;
+    background-color: #004080;
 }
 
 .content {
     display: none;
     padding-left: 20px;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .content a {
@@ -160,6 +171,7 @@ input[type="text"], input[type="password"] {
     color: #007bff;
     margin-bottom: 5px;
     display: block;
+    font-size: 14px;
 }
 
 .content a:hover {
