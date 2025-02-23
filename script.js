@@ -94,10 +94,13 @@ function checkLogin() {
     }
 }
 
- function logout() {
-    sessionStorage.clear();  // ✅ Clear all session storage data
-    localStorage.removeItem("deviceSessionKey"); // ✅ Remove device session key
-    window.location.href = "index.html"; // ✅ Redirect to login
+function logout() {
+    console.log("Logout function triggered!"); // Debugging log
+    sessionStorage.clear();  // ✅ Remove session data
+    localStorage.clear(); // ✅ Ensure session hijacking prevention is reset
+    setTimeout(() => {
+        window.location.href = "index.html"; // ✅ Redirect correctly after session clears
+    }, 100); // Small delay to ensure session storage clears properly
 }
 
 
