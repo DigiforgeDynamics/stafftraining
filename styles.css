@@ -9,7 +9,7 @@
 /* ✅ Logo Styling */
 .logo {
     height: 50px;  /* Adjust logo height */
-    width: auto;   /* Maintain aspect ratio */
+    width: 50%;   /* Maintain aspect ratio */
     margin-right: 12px; /* Add spacing between logo and text */
 }
 
