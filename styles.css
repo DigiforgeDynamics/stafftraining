@@ -49,7 +49,7 @@ body {
 
 /* Logo Styling */
 .logo {
-    height: 40px;  /* Adjust logo height */
+    height: 60px;  /* Adjust logo height */
     width: auto;   /* Maintain aspect ratio */
     margin-right: 12px; /* Add spacing between logo and text */
 }
