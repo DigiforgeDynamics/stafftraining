@@ -52,16 +52,17 @@ header {
     font-weight: 600;
 }
 
-/* ✅ Logout Button */
+/* Fix Logout Button */
 .logout-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    padding: 10px 20px;
     background: #e74c3c;
     color: white;
     border: none;
-    padding: 10px 20px;
-    cursor: pointer;
     border-radius: 8px;
-    position: absolute;
-    right: 20px;
+    cursor: pointer;
     font-size: 16px;
     transition: 0.3s;
 }
@@ -69,6 +70,7 @@ header {
 .logout-btn:hover {
     background: #c0392b;
 }
+
 
 /* 📌 LOGIN FORM */
 .login-container {
@@ -216,9 +218,5 @@ button:hover {
         margin-top: 10px;
     }
 
-    .logout-btn {
-        position: relative;
-        margin-top: 10px;
-        right: 0;
-    }
+
 }
