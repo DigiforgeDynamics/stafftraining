@@ -17,53 +17,44 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-/* 📌 HEADER */
-header {
-    width: 100%;
-    background: #34495e;
-    color: white;
-    padding: 15px 20px;
+/* Header Styling */
+.header {
     display: flex;
-    align-items: center;
+    align-items: center;  /* Align items properly */
     justify-content: space-between;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #2C3E50; /* Dark blue-gray */
+    padding: 10px 30px;
+    height: 60px; /* Adjust height */
 }
 
-/* ✅ Logo & Company Name */
-.logo-container {
+/* Logo and Title Wrapper */
+.header-left {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: center;  /* Ensures logo and text align */
 }
 
-.logo {
-    width: 50px;
-    height: auto;
+/* Logo */
+.header-left img {
+    height: 40px; /* Adjust size */
+    margin-right: 12px; /* Add spacing between logo and text */
 }
 
-/* ✅ Centered "Staff Training" Text */
-.staff-training {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+/* Title */
+.header-title {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: bold;
+    color: white;
 }
 
-/* Fix Logout Button */
+/* Logout Button */
 .logout-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    padding: 10px 20px;
     background: #e74c3c;
     color: white;
     border: none;
+    padding: 10px 20px;
+    font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
     transition: 0.3s;
 }
 
