@@ -46,6 +46,20 @@ body {
     color: white;
 }
 
+
+/* Logo Styling */
+.logo {
+    height: 40px;  /* Adjust logo height */
+    width: auto;   /* Maintain aspect ratio */
+    margin-right: 12px; /* Add spacing between logo and text */
+}
+
+/* Logo Container */
+.header-left {
+    display: flex;
+    align-items: center; /* Ensures proper vertical alignment */
+}
+
 /* Logout Button */
 .logout-btn {
     background: #e74c3c;
