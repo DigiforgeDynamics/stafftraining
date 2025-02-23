@@ -7,23 +7,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     
     <script>
-    // ✅ Ensure session is cleared on page load
     window.onload = function () {
         sessionStorage.removeItem("authToken"); // Ensure user is logged out when visiting login page
     };
 
-    // ✅ Redirect to dashboard only if user is actually logged in
     document.addEventListener("DOMContentLoaded", function () {
-        const token = sessionStorage.getItem("authToken");
-        if (token) {
-            console.log("User is logged in, redirecting to dashboard...");
+        if (sessionStorage.getItem("authToken")) {
             window.location.href = "dashboard.html";
         }
     });
     </script>
 
-    <script defer src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Login</h2>
@@ -31,5 +26,8 @@
     <input type="password" id="password" placeholder="Password" required><br>
     <button onclick="login()">Login</button>
     <p id="error-message" class="error"></p>
+
+    <!-- ✅ Move script.js to the end of <body> to avoid duplicate execution -->
+    <script defer src="script.js"></script>
 </body>
 </html>
