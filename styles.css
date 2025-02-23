@@ -6,6 +6,19 @@
     font-family: "Poppins", sans-serif;
 }
 
+/* ✅ Logo Styling */
+.logo {
+    height: 50px;  /* Adjust logo height */
+    width: auto;   /* Maintain aspect ratio */
+    margin-right: 12px; /* Add spacing between logo and text */
+}
+
+/* ✅ Logo Container */
+.header-left {
+    display: flex;
+    align-items: center; /* Ensures proper vertical alignment */
+}
+
 /* ✅ Background & Layout */
 body {
     background: linear-gradient(135deg, #1e3c72, #2a5298);
