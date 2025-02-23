@@ -17,50 +17,35 @@ body {
     justify-content: center;
     align-items: center;
 }
-/* Header Styling */
+
+/* ✅ Header Styling */
 .header {
     display: flex;
-    align-items: center;  /* Align items properly */
+    align-items: center;
     justify-content: space-between;
-    background-color: #2C3E50; /* Dark blue-gray */
+    background-color: #2C3E50;
     padding: 10px 30px;
-    height: 60px; /* Adjust height */
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-/* Logo and Title Wrapper */
+/* Logo and Title */
 .header-left {
     display: flex;
-    align-items: center;  /* Ensures logo and text align */
+    align-items: center;
 }
 
-/* Logo */
-.header-left img {
-    height: 40px; /* Adjust size */
-    margin-right: 12px; /* Add spacing between logo and text */
-}
-
-/* Title */
 .header-title {
     font-size: 20px;
     font-weight: bold;
     color: white;
 }
 
-
-/* Logo Styling */
-.logo {
-    height: 60px;  /* Adjust logo height */
-    width: auto;   /* Maintain aspect ratio */
-    margin-right: 12px; /* Add spacing between logo and text */
-}
-
-/* Logo Container */
-.header-left {
-    display: flex;
-    align-items: center; /* Ensures proper vertical alignment */
-}
-
-/* Logout Button */
+/* ✅ Logout Button */
 .logout-btn {
     background: #e74c3c;
     color: white;
@@ -76,7 +61,6 @@ body {
     background: #c0392b;
 }
 
-
 /* 📌 LOGIN FORM */
 .login-container {
     width: 100%;
@@ -88,6 +72,7 @@ body {
     text-align: center;
     color: #333;
     margin: auto;
+    margin-top: 80px;
 }
 
 .login-container h2 {
@@ -97,7 +82,7 @@ body {
 
 /* ✅ Input Fields */
 input[type="text"], input[type="password"] {
-    width: 40%;
+    width: 80%;
     padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -119,22 +104,44 @@ input:focus {
     font-size: 14px;
 }
 
-/* ✅ Buttons */
+/* 📌 BUTTONS */
 button {
     padding: 12px;
-    background-color: #007bff;
-    color: white;
     border: none;
     cursor: pointer;
     border-radius: 6px;
     margin-top: 10px;
     font-size: 16px;
-    width: 22%;
-    transition: 0.3s;
+    width: 80%;
+    transition: 0.3s ease-in-out;
 }
 
-button:hover {
-    background-color: #0056b3;
+/* ✅ Unique Button Colors */
+.login-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #218838;
+}
+
+.register-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: #138496;
+}
+
+.forgot-password-btn {
+    background-color: #ffc107;
+    color: black;
+}
+
+.forgot-password-btn:hover {
+    background-color: #e0a800;
 }
 
 /* 📌 DASHBOARD */
@@ -152,8 +159,6 @@ button:hover {
 
 /* 📌 COLLAPSIBLE SECTIONS */
 .collapsible {
-    background-color: #007bff;
-    color: white;
     cursor: pointer;
     padding: 12px;
     width: 100%;
@@ -166,12 +171,32 @@ button:hover {
     margin-top: 10px;
 }
 
-.collapsible:hover {
+/* ✅ Different Colors for Sections */
+.collapsible.section1 {
+    background-color: #007bff;
+    color: white;
+}
+
+.collapsible.section1:hover {
     background-color: #0056b3;
 }
 
-.collapsible.active {
-    background-color: #004080;
+.collapsible.section2 {
+    background-color: #28a745;
+    color: white;
+}
+
+.collapsible.section2:hover {
+    background-color: #218838;
+}
+
+.collapsible.section3 {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.collapsible.section3:hover {
+    background-color: #c0392b;
 }
 
 .content {
@@ -183,16 +208,18 @@ button:hover {
     margin-top: 5px;
 }
 
-
-/* 📌 VIDEO PAGE */
-/* Center the Video Section */
-
-
+/* Smooth transition for collapsible sections */
 .content {
-    display: none;
-    padding-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
 }
 
+.collapsible.active + .content {
+    max-height: 300px;
+}
+
+/* 📌 VIDEO PAGE */
 .content a {
     text-decoration: none;
     color: #007bff;
@@ -203,7 +230,8 @@ button:hover {
 .content a:hover {
     text-decoration: underline;
 }
-/* Back Button Styling */
+
+/* 📌 BACK BUTTON */
 .back-btn {
     text-decoration: none;
     background: #007bff;
@@ -215,28 +243,31 @@ button:hover {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    transition: 0.3s;
 }
 
-/* Fix Back Button Alignment */
-.back-btn-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+.back-btn:hover {
+    background-color: #0056b3;
 }
 
 /* ✅ Responsive Design */
 @media (max-width: 768px) {
-    header {
+    .header {
         flex-direction: column;
         text-align: center;
+        height: auto;
+        padding: 15px;
     }
 
-    .staff-training {
-        position: relative;
-        left: 0;
-        transform: none;
-        margin-top: 10px;
+    .course-container {
+        width: 95%;
     }
 
+    input[type="text"], input[type="password"] {
+        width: 90%;
+    }
 
+    button {
+        width: 90%;
+    }
 }
