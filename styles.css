@@ -3,25 +3,32 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
-/* ✅ Background & Text */
+/* ✅ Background & Layout */
 body {
-    background: linear-gradient(135deg, #2c3e50, #27ae60);
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
     color: white;
     text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 📌 HEADER */
 header {
-    background-color: #007bff;
+    width: 100%;
+    background: #34495e;
     color: white;
     padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* ✅ Logo & Company Name */
@@ -32,7 +39,7 @@ header {
 }
 
 .logo {
-    width: 60px;
+    width: 50px;
     height: auto;
 }
 
@@ -41,60 +48,61 @@ header {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 /* ✅ Logout Button */
 .logout-btn {
-    background: red;
-    min-width: 100px;
+    background: #e74c3c;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
     position: absolute;
-    top: 50%;
     right: 20px;
-    transform: translateY(-50%);
     font-size: 16px;
+    transition: 0.3s;
 }
 
 .logout-btn:hover {
-    background: darkred;
+    background: #c0392b;
 }
 
 /* 📌 LOGIN FORM */
 .login-container {
     width: 100%;
     max-width: 400px;
-    margin: 100px auto;
     background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     color: #333;
+    margin: auto;
 }
 
 .login-container h2 {
     margin-bottom: 20px;
-    font-size: 22px;
+    font-size: 24px;
 }
 
 /* ✅ Input Fields */
 input[type="text"], input[type="password"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 16px;
+    transition: 0.3s;
 }
 
 input:focus {
-    outline: 2px solid #27ae60;
+    border-color: #2a5298;
+    outline: none;
+    box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
 }
 
 /* ✅ Error Message */
@@ -106,33 +114,32 @@ input:focus {
 
 /* ✅ Buttons */
 button {
-    padding: 10px;
+    padding: 12px;
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
     margin-top: 10px;
     font-size: 16px;
+    width: 100%;
+    transition: 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-/* ✅ Full-Width Login Button */
-.login-btn {
-    width: 100%;
-}
-
 /* 📌 DASHBOARD */
 .course-container {
-    width: 80%;
-    margin: 30px auto;
-    padding: 20px;
+    width: 90%;
+    max-width: 600px;
     background: white;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
     text-align: left;
 }
 
@@ -141,13 +148,15 @@ button:hover {
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    padding: 10px;
+    padding: 12px;
     width: 100%;
     text-align: left;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     transition: 0.3s;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 .collapsible:hover {
@@ -163,17 +172,53 @@ button:hover {
     padding-left: 20px;
     background: #f4f4f4;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 6px;
+    margin-top: 5px;
 }
 
 .content a {
     text-decoration: none;
     color: #007bff;
-    margin-bottom: 5px;
-    display: block;
     font-size: 14px;
+    display: block;
+    padding: 5px 0;
+    transition: 0.3s;
 }
 
 .content a:hover {
     text-decoration: underline;
+    color: #004080;
+}
+
+/* 📌 VIDEO PAGE */
+.video-container {
+    width: 90%;
+    max-width: 800px;
+    background: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .staff-training {
+        position: relative;
+        left: 0;
+        transform: none;
+        margin-top: 10px;
+    }
+
+    .logout-btn {
+        position: relative;
+        margin-top: 10px;
+        right: 0;
+    }
 }
