@@ -1,51 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Video</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Staff Training Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="signup.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Training Video</h1>
-        <button onclick="goBack()">⬅ Back to Dashboard</button>
-    </header>
-
-    <main>
-        <div class="video-container">
-            <video id="trainingVideo" controls>
-                <source id="videoSource" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </main>
-
-    <script>
-        // Function to get the video URL from query parameters
-        function getVideoURL() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get("video") || "";
-        }
-
-        // Function to set the video URL in the player
-        function loadVideo() {
-            const videoURL = getVideoURL();
-            if (videoURL) {
-                document.getElementById("videoSource").src = videoURL;
-                document.getElementById("trainingVideo").load();
-            } else {
-                document.querySelector(".video-container").innerHTML = "<p>No video selected.</p>";
-            }
-        }
-
-        // Function to go back to the dashboard
-        function goBack() {
-            window.location.href = "dashboard.html";
-        }
-
-        // Load the video on page load
-        window.onload = loadVideo;
-    </script>
+  <div class="container">
+    <h1>Sign Up</h1>
+    <form id="signup-form">
+      <input type="email" id="signup-email" placeholder="Email" required />
+      <input type="password" id="signup-password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+      <p id="signup-error-message"></p>
+    </form>
+    <p>Already have an account? <a href="index.html">Login</a></p>
+  </div>
 </body>
 </html>
