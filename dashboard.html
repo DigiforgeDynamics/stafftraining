@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="module" src="authGuard.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <script type="module" src="logout.js" defer></script>
 </head>
 <body>
   <div class="container">
     <h1>Welcome to the Staff Training Portal</h1>
     <button id="logout-btn">Logout</button>
   </div>
+
+  <!-- Load scripts AFTER DOM to prevent errors -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="authGuard.js"></script>
+  <script type="module" src="logout.js"></script>
 </body>
 </html>
