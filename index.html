@@ -1,33 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    
-    <script>
-    window.onload = function () {
-        sessionStorage.removeItem("authToken"); // Ensure user is logged out when visiting login page
-    };
-
-    document.addEventListener("DOMContentLoaded", function () {
-        if (sessionStorage.getItem("authToken")) {
-            window.location.href = "dashboard.html";
-        }
-    });
-    </script>
-
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Staff Training Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="app.js" defer></script>
 </head>
 <body>
-    <h2>Login</h2>
-    <input type="text" id="employeeId" placeholder="Employee ID" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <button onclick="login()">Login</button>
-    <p id="error-message" class="error"></p>
-
-    <!-- ✅ Move script.js to the end of <body> to avoid duplicate execution -->
-    <script defer src="script.js"></script>
+  <div class="container">
+    <h1>Login</h1>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <p id="error-message"></p>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+  </div>
 </body>
 </html>
