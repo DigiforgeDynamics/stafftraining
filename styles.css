@@ -1,302 +1,45 @@
-/* 📌 RESET & GENERAL STYLES */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-/* ✅ Logo Styling */
-.logo {
-    height: 50px;  /* Adjust logo height */
-    width: min-content;   /* Maintain aspect ratio */
-    margin-right: 12px; /* Add spacing between logo and text */
-}
-
-/* ✅ Logo Container */
-.header-left {
-    display: flex;
-    align-items: center; /* Ensures proper vertical alignment */
-}
-
-/* ✅ Background & Layout */
 body {
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    color: white;
-    text-align: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-/* ✅ Header Styling */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #2C3E50;
-    padding: 10px 30px;
-    height: 60px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
 }
 
-/* Logo and Title */
-.header-left {
-    display: flex;
-    align-items: center;
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
-.header-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-}
-
-/* ✅ Logout Button */
-.logout-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.logout-btn:hover {
-    background: #c0392b;
-}
-
-/* 📌 LOGIN FORM */
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    color: #333;
-    margin: auto;
-    margin-top: 80px;
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-/* ✅ Input Fields */
-input[type="text"], input[type="password"] {
-    width: 80%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-input:focus {
-    border-color: #2a5298;
-    outline: none;
-    box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
-}
-
-/* ✅ Error Message */
-.error-message {
-    color: red;
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-/* 📌 BUTTONS */
 button {
-    padding: 12px;
-    border: none;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-top: 10px;
-    font-size: 16px;
-    width: 80%;
-    transition: 0.3s ease-in-out;
+  width: 100%;
+  padding: 10px;
+  background-color: #0aa07a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-/* ✅ Unique Button Colors */
-.login-btn {
-    background-color: #28a745;
-    color: white;
+button:hover {
+  background-color: #087f61;
 }
 
-.login-btn:hover {
-    background-color: #218838;
-}
-
-.register-btn {
-    background-color: #17a2b8;
-    color: white;
-}
-
-.register-btn:hover {
-    background-color: #138496;
-}
-
-.forgot-password-btn {
-    background-color: #ffc107;
-    color: black;
-}
-
-.forgot-password-btn:hover {
-    background-color: #e0a800;
-}
-
-/* 📌 DASHBOARD */
-.course-container {
-    width: 90%;
-    max-width: 600px;
-    background: white;
-    color: #333;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    text-align: left;
-}
-
-/* 📌 COLLAPSIBLE SECTIONS */
-.collapsible {
-    cursor: pointer;
-    padding: 12px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: 0.3s;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* ✅ Different Colors for Sections */
-.collapsible.section1 {
-    background-color: #007bff;
-    color: white;
-}
-
-.collapsible.section1:hover {
-    background-color: #0056b3;
-}
-
-.collapsible.section2 {
-    background-color: #28a745;
-    color: white;
-}
-
-.collapsible.section2:hover {
-    background-color: #218838;
-}
-
-.collapsible.section3 {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.collapsible.section3:hover {
-    background-color: #c0392b;
-}
-
-.content {
-    display: none;
-    padding-left: 20px;
-    background: #f4f4f4;
-    padding: 10px;
-    border-radius: 6px;
-    margin-top: 5px;
-}
-
-/* Smooth transition for collapsible sections */
-.content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-}
-
-.collapsible.active + .content {
-    max-height: 300px;
-}
-
-/* Center Video Section */
-.video-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80vh;
-}
-
-/* Video Box Styling */
-.video-box {
-    width: 100vw; /* Make it take full screen width */
-    max-width: 1200px; /* Prevents it from becoming too large */
-}
-
-.video-box video {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    max-height: 80vh; /* Prevents it from getting too tall */
-}
-
-
-/* Back Button Styling */
-.back-btn {
-    text-decoration: none;
-    background: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-/* Make Video Responsive */
-@media (max-width: 768px) {
-    .video-box {
-        width: 95%;
-    }
-
-    .video-box video {
-        height: 280px; /* Smaller height for mobile */
-    }
-}
-
-/* ✅ Responsive Design */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        text-align: center;
-        height: auto;
-        padding: 15px;
-    }
-
-    .course-container {
-        width: 95%;
-    }
-
-    input[type="text"], input[type="password"] {
-        width: 90%;
-    }
-
-    button {
-        width: 90%;
-    }
+p {
+  text-align: center;
+  margin-top: 1rem;
 }
