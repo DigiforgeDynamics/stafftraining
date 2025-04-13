@@ -1,73 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-  
-    if (!sessionStorage.getItem("authToken")) {
-        window.location.href = "index.html"; // Redirect to login page if not logged in
-    }
-</script>
-    <header>
-        <h1>Training Dashboard</h1>
-        <button onclick="logout()">🚪 Logout</button>
-    </header>
-
-    <main>
-        <div class="course-container">
-            <h2>Training Topics</h2>
-
-            <!-- 📌 Topic 1 -->
-            <button class="collapsible">📂 Topic 1: Cybersecurity Basics</button>
-            <div class="content">
-                <ul>
-                    <li><a href="video.html?video=videos/cyber1.mp4">🔹 Introduction to Cybersecurity</a></li>
-                    <li><a href="video.html?video=videos/cyber2.mp4">🔹 Network Security</a></li>
-                </ul>
-            </div>
-
-            <!-- 📌 Topic 2 -->
-            <button class="collapsible">📂 Topic 2: Ethical Hacking</button>
-            <div class="content">
-                <ul>
-                    <li><a href="video.html?video=videos/hacking1.mp4">🔹 Basics of Ethical Hacking</a></li>
-                    <li><a href="video.html?video=videos/hacking2.mp4">🔹 Penetration Testing</a></li>
-                </ul>
-            </div>
-
-            <!-- 📌 Topic 3 -->
-            <button class="collapsible">📂 Topic 3: Web Security</button>
-            <div class="content">
-                <ul>
-                    <li><a href="video.html?video=videos/web1.mp4">🔹 Common Web Vulnerabilities</a></li>
-                    <li><a href="video.html?video=videos/web2.mp4">🔹 Preventing SQL Injection</a></li>
-                </ul>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        // Collapsible function
-        document.addEventListener("DOMContentLoaded", function () {
-            const collapsibles = document.querySelectorAll(".collapsible");
-            collapsibles.forEach((collapsible) => {
-                collapsible.addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    let content = this.nextElementSibling;
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                    }
-                });
-            });
-        });
-
-        // Logout function
-        function logout() {
-            window.location.href = "index.html";
-        }
-    </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="logout.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Staff Training Portal</h1>
+    <button id="logout-btn">Logout</button>
+  </div>
 </body>
 </html>
