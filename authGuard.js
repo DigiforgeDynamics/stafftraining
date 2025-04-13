@@ -4,7 +4,6 @@ import { auth } from "./firebase.js";
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    // If no user is signed in, redirect to login
     window.location.href = "index.html";
   }
 });
