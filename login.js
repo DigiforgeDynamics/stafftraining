@@ -1,8 +1,6 @@
-  // login.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
@@ -13,19 +11,16 @@ const firebaseConfig = {
   measurementId: "G-3XY8E8XVT2"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Login Form Handler
 document.getElementById("login-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Redirect to dashboard on successful login
+    .then(() => {
       window.location.href = "dashboard.html";
     })
     .catch((error) => {
