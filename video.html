@@ -1,0 +1,161 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- FontAwesome for the icon -->
+  <style>
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2em;
+      margin: 0;
+    }
+
+    #back-btn {
+      margin-top: 10px;
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    #back-btn:hover {
+      background-color: #555;
+    }
+
+    #back-btn i {
+      margin-right: 8px; /* Space between the icon and text */
+    }
+
+    #video-container {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    iframe {
+      max-width: 100%;
+      height: 360px;
+      border: none;
+    }
+
+    /* Error message styling */
+    .error-message {
+      color: red;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Video wrapper for responsiveness */
+    .video-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Styling for the page content */
+    .content-wrapper {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    /* Mobile responsive styling */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+
+      iframe {
+        height: 200px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <h1 id="video-title">Loading...</h1>
+    <a href="javascript:history.back()" id="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Video List
+    </a>
+  </header>
+
+  <!-- Video Embed Section -->
+  <div class="video-wrapper">
+    <div id="video-container"></div>
+    <div class="content-wrapper">
+      <p id="error-message" class="error-message"></p>
+    </div>
+  </div>
+
+  <script>
+    // Video ID to URL mapping (you can replace the sample URLs later)
+    const videoMap = {
+      '001': { title: 'Introduction to EO Role', url: 'https://player.vimeo.com/video/123456789' },
+      '002': { title: 'Mission & Vision', url: 'https://player.vimeo.com/video/987654321' },
+      '003': { title: 'EO Onboarding Video', url: 'https://player.vimeo.com/video/347119375' },
+      '004': { title: 'Team Collaboration', url: 'https://player.vimeo.com/video/346734911' },
+      '005': { title: 'Leadership Essentials', url: 'https://player.vimeo.com/video/455439281' },
+      '006': { title: 'Effective Communication', url: 'https://player.vimeo.com/video/789654123' },
+      '007': { title: 'Project Management Basics', url: 'https://player.vimeo.com/video/215687342' },
+      '008': { title: 'Company Culture and Values', url: 'https://player.vimeo.com/video/186547298' },
+      // Add more video IDs and titles here as needed
+    };
+
+    // Get the video ID from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoId = urlParams.get('id');
+    
+    // Fetch the video data from the map based on the ID
+    const video = videoMap[videoId];
+    
+    if (video) {
+      // Set the header title to the video title
+      document.getElementById('video-title').textContent = video.title;
+      
+      // Embed the video using the URL from the map
+      const videoContainer = document.getElementById('video-container');
+      videoContainer.innerHTML = `<iframe src="${video.url}" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    } else {
+      // If video is not found, show an error message
+      document.getElementById('video-title').textContent = 'Video not found';
+      document.getElementById('error-message').textContent = 'Sorry, this video is unavailable.';
+      document.getElementById('video-container').style.display = 'none'; // Hide the video container if not found
+    }
+  </script>
+  
+</body>
+</html>
