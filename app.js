@@ -1,20 +1,14 @@
+// app.js (Firebase initialization only)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 
-  import { auth } from './firebase-config.js';
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
+  authDomain: "stafftraining-eef33.firebaseapp.com",
+  projectId: "stafftraining-eef33",
+  storageBucket: "stafftraining-eef33.appspot.com",
+  messagingSenderId: "912734544923",
+  appId: "1:912734544923:web:0d52ee5deb49e6380a04be",
+  measurementId: "G-3XY8E8XVT2"
+};
 
-const loginForm = document.getElementById('login-form');
-const errorMessage = document.getElementById('error-message');
-
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      window.location.href = "dashboard.html";
-    })
-    .catch((error) => {
-      errorMessage.textContent = `Error: ${error.message}`;
-    });
-});
+export const app = initializeApp(firebaseConfig);
