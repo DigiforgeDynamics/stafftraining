@@ -1,4 +1,4 @@
-  :root {
+:root {
   --primary: #00a2ff;
   --accent: #00b050;
   --text: #ffffff;
@@ -133,5 +133,50 @@ main {
 
   .collapsible-header {
     font-size: 1rem;
+  }
+}
+/* Header layout for flexibility */
+.dashboard-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+/* Button style (same visual, better responsive positioning) */
+#logout-btn {
+  padding: 8px 16px;
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#logout-btn:hover {
+  background-color: #e60000;
+}
+
+/* Ensure spacing on mobile */
+@media (max-width: 600px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  #logout-btn {
+    width: auto;
   }
 }
