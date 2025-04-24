@@ -1,3 +1,4 @@
+/* Base Styles for mobile-first approach */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -98,12 +99,14 @@ button:disabled {
   text-align: center;
 }
 
+/* Animation for spinning */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
+/* Fade-in for login card */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -112,5 +115,47 @@ button:disabled {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Media Query for tablets and larger screens */
+@media (min-width: 600px) {
+  .company-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .portal-title {
+    font-size: 1.75rem;
+  }
+
+  input {
+    font-size: 1.1rem;
+  }
+
+  button {
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+}
+
+/* Media Query for large screens and desktops */
+@media (min-width: 1024px) {
+  .login-card {
+    max-width: 450px;
+    padding: 3rem 2.5rem;
+  }
+
+  .company-logo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .portal-title {
+    font-size: 2rem;
+  }
+
+  input, button {
+    font-size: 1.2rem;
   }
 }
