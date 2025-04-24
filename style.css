@@ -1,57 +1,67 @@
-/* Base Styles for mobile-first approach */
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #0aa07a, #087f61);
+  background: #0e0e0e;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.login-wrapper {
-  width: 100%;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-.login-card {
-  background: #fff;
-  padding: 2.5rem 2rem;
+.container {
+  background: #1e1e1e;
+  padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  width: 100%;
-  max-width: 400px;
+  box-shadow: 0 0 24px rgba(10, 160, 122, 0.5);
+  width: 90%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(10, 160, 122, 0.8);
+  margin-bottom: 0.8rem;
+}
+
+h1 {
+  font-size: 1.3rem;
   text-align: center;
-  animation: fadeIn 0.6s ease;
 }
 
-.company-logo {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 1rem;
-}
-
-.portal-title {
-  font-size: 1.5rem;
-  color: #0aa07a;
-  margin-bottom: 2rem;
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 input {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
+  width: 120%;
+  padding: 12px;
+  margin: 0.5rem 0;
+  border: none;
   border-radius: 8px;
+  background: #2a2a2a;
+  color: #fff;
   font-size: 1rem;
-  transition: border 0.2s ease;
 }
 
-input:focus {
-  outline: none;
-  border-color: #0aa07a;
+input::placeholder {
+  color: #bbb;
 }
 
 button {
@@ -59,33 +69,29 @@ button {
   padding: 12px;
   background-color: #0aa07a;
   color: white;
-  font-size: 1rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 1rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 8px;
-  transition: background-color 0.2s ease;
+  align-items: center;
+  position: relative;
 }
 
 button:hover {
   background-color: #087f61;
 }
 
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
 .spinner {
-  border: 3px solid #fff;
-  border-top: 3px solid transparent;
+  border: 3px solid transparent;
+  border-top: 3px solid #fff;
   border-radius: 50%;
   width: 16px;
   height: 16px;
   animation: spin 1s linear infinite;
+  position: absolute;
+  right: 20px;
 }
 
 .hidden {
@@ -93,69 +99,35 @@ button:disabled {
 }
 
 #error-msg {
-  margin-top: 1rem;
-  color: red;
-  font-size: 0.95rem;
+  color: #ff4d4d;
+  margin-top: 12px;
   text-align: center;
+  font-size: 0.9rem;
 }
 
-/* Animation for spinning */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-/* Fade-in for login card */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Media Query for tablets and larger screens */
-@media (min-width: 600px) {
-  .company-logo {
-    width: 80px;
-    height: 80px;
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem;
+    max-width: 90%;
   }
 
-  .portal-title {
-    font-size: 1.75rem;
-  }
-
-  input {
+  h1 {
     font-size: 1.1rem;
   }
 
-  button {
-    font-size: 1.1rem;
-    padding: 14px;
-  }
-}
-
-/* Media Query for large screens and desktops */
-@media (min-width: 1024px) {
-  .login-card {
-    max-width: 450px;
-    padding: 3rem 2.5rem;
-  }
-
-  .company-logo {
-    width: 90px;
-    height: 90px;
-  }
-
-  .portal-title {
-    font-size: 2rem;
+  .logo {
+    width: 64px;
+    height: 64px;
   }
 
   input, button {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
   }
 }
