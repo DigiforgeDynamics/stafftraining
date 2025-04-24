@@ -1,6 +1,12 @@
+// ✅ Correct Firebase import with closing quote
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
+// ✅ Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
@@ -11,16 +17,28 @@ const firebaseConfig = {
   measurementId: "G-3XY8E8XVT2"
 };
 
+// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const errorMsg = document.getElementById("error-msg");
+// ✅ Element references
+const loginForm = document.getElementById('login-form');
+const loginBtn = document.getElementById('login-btn');
+const spinner = document.getElementById('spinner');
+const btnText = document.getElementById('btn-text');
+const errorMsg = document.getElementById('error-msg');
 
-document.getElementById("login-form").addEventListener("submit", async (e) => {
+// ✅ Login form submit handler
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
-  errorMsg.textContent = ""; // Clear previous error
+  errorMsg.textContent = "";
+
+  spinner.classList.remove('hidden');
+  btnText.textContent = "Logging in...";
+  loginBtn.disabled = true;
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -28,9 +46,13 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   } catch (error) {
     errorMsg.textContent = "Invalid email or password. Please try again.";
   }
+
+  spinner.classList.add('hidden');
+  btnText.textContent = "Login";
+  loginBtn.disabled = false;
 });
 
-// Optional: redirect if already logged in
+// ✅ Redirect if already logged in
 onAuthStateChanged(auth, (user) => {
   if (user) {
     window.location.href = "dashboard.html";
