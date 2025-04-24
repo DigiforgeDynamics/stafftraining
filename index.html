@@ -6,32 +6,24 @@
   <title>Login - Staff Training Portal</title>
   <link rel="stylesheet" href="style.css" />
   <script type="module" src="login.js" defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-  <div class="login-wrapper">
-    <div class="login-box">
-      <div class="logo-container">
-        <img src="https://i.ibb.co/545b7mr/image.png" alt="DigiforgeDynamics Logo" />
-        <h2>DigiforgeDynamics</h2>
-      </div>
+  <div class="container">
+    <div class="logo-container">
+      <img src="https://i.ibb.co/545b7mr/image.png" alt="Company Logo" class="logo" />
       <h1>Staff Training Portal</h1>
-      <form id="login-form">
-        <div class="input-group">
-          <i class="fas fa-envelope"></i>
-          <input type="email" id="email" placeholder="Email" required />
-        </div>
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="password" placeholder="Password" required />
-        </div>
-        <button type="submit" id="login-btn">
-          <span id="btn-text">Login</span>
-          <span id="spinner" class="spinner hidden"></span>
-        </button>
-        <p id="error-msg"></p>
-      </form>
     </div>
+    <form id="login-form">
+      <div class="input-wrapper">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+      </div>
+      <button type="submit" id="login-btn">
+        <span id="btn-text">Login</span>
+        <div id="spinner" class="spinner hidden"></div>
+      </button>
+      <p id="error-msg"></p>
+    </form>
   </div>
 </body>
 </html>
