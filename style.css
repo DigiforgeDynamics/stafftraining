@@ -1,45 +1,129 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #f1f1f1;
+  margin: 0;
+  background: linear-gradient(135deg, #0aa07a, #047f61);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.container {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 90%;
+.login-wrapper {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.login-box {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   max-width: 400px;
+  width: 100%;
+  animation: fadeIn 0.8s ease;
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.logo-container img {
+  width: 60px;
+  height: 60px;
+}
+
+.logo-container h2 {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #0aa07a;
+  font-weight: 600;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #0aa07a;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.input-group i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #888;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  margin: 0.5rem 0;
+  padding: 10px 10px 10px 38px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input:focus {
+  border-color: #0aa07a;
 }
 
 button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #0aa07a;
   color: white;
+  font-weight: bold;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
 button:hover {
   background-color: #087f61;
 }
 
-p {
+#error-msg {
   text-align: center;
-  margin-top: 1rem;
+  color: red;
+  font-size: 0.95rem;
+  margin-top: 0.8rem;
+  min-height: 1.2rem;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 3px solid white;
+  border-top: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
