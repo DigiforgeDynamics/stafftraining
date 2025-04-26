@@ -1,126 +1,149 @@
-// Import necessary Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-// Firebase configuration
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+// ✅ Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
-  databaseURL: "https://stafftraining-eef33-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "stafftraining-eef33",
-  storageBucket: "stafftraining-eef33.appspot.com",
-  messagingSenderId: "912734544923",
-  appId: "1:912734544923:web:0d52ee5deb49e6380a04be",
+@@ -15,125 +14,113 @@ const firebaseConfig = {
   measurementId: "G-3XY8E8XVT2"
 };
 
-// Initialize Firebase
+// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const auth = getAuth(app);
+const database = getDatabase();
 
-// =========================
-// USER MANAGEMENT FUNCTIONS
-// =========================
+// ✅ Check if Admin is logged in
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "index.html"; // Not logged in, redirect to login
+  } else {
+    console.log("Admin logged in:", user.email);
+    loadUsers(); // Load users if logged in
+  }
+});
 
-// Fetch and display all users
-function fetchUsers() {
-  const usersRef = ref(database, 'users');
+// ✅ Logout Admin
+const logoutBtn = document.getElementById('logout-btn');
+logoutBtn.addEventListener('click', async () => {
+  await signOut(auth);
+  window.location.href = "index.html"; // Redirect to login page
+});
 
+// ✅ Reference to the users section in database
+const usersRef = ref(database, 'users');
+
+
+// ✅ Fetch Users from Firebase
+function loadUsers() {
+  const usersTableBody = document.querySelector("#users-section tbody");
   get(usersRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const users = snapshot.val();
         displayUsers(users);
       } else {
-        document.getElementById("users-table").innerHTML = "<tr><td colspan='4'>No users found.</td></tr>";
+        console.log("No users data found");
       }
     })
     .catch((error) => {
-      console.error("Error fetching users:", error);
+      console.error(error);
     });
 }
 
-// Display users in the table
+// ✅ Display Users in Admin Dashboard
 function displayUsers(users) {
-  const usersTable = document.getElementById("users-table");
-  usersTable.innerHTML = ""; // Clear old data
+  const usersTableBody = document.querySelector("#users-section tbody");
+  usersTableBody.innerHTML = ''; // Clear table before adding new data
 
   for (const userId in users) {
     const user = users[userId];
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td>${user.name}</td>
-      <td>${user.email}</td>
-      <td>${user.role}</td>
-      <td><button class="delete-btn" onclick="deleteUser('${userId}')">Delete</button></td>
+    const row = `
+      <tr>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td><button onclick="deleteUser('${userId}')" class="delete-btn">Delete</button></td>
+      </tr>
     `;
+    usersTableBody.insertAdjacentHTML('beforeend', row);
 
-    usersTable.appendChild(row);
   }
 }
 
-// Add a new user
-function addUser(name, email, role) {
-  const usersRef = ref(database, 'users');
-  const userId = generateUniqueId();
+// ✅ Delete User from Firebase
+function deleteUser(userId) {
+  const userRef = ref(database, `users/${userId}`);
+  remove(userRef)
 
-  const userData = {
-    name: name,
-    email: email,
-    role: role
-  };
 
-  set(ref(database, 'users/' + userId), userData)
+
     .then(() => {
-      alert("User added successfully!");
-      fetchUsers();
-      document.getElementById("add-user-form").reset();
+      alert("User deleted successfully");
+      loadUsers(); // Refresh users list after deletion
+
     })
     .catch((error) => {
-      console.error("Error adding user:", error);
+      console.error("Error deleting user:", error);
     });
 }
 
-// Delete a user
-window.deleteUser = function(userId) {
-  if (confirm("Are you sure you want to delete this user?")) {
-    const userRef = ref(database, `users/${userId}`);
+// ✅ Add New User Form
+const addUserForm = document.getElementById('add-user-form');
+addUserForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-    remove(userRef)
-      .then(() => {
-        alert("User deleted successfully!");
-        fetchUsers();
-      })
-      .catch((error) => {
-        console.error("Error deleting user:", error);
-      });
-  }
-}
-
-// Generate a unique ID (could also use Firebase push IDs or custom IDs)
-function generateUniqueId() {
-  return 'user-' + Date.now();
-}
-
-// =========================
-// EVENT LISTENERS
-// =========================
-
-// Add user form submission
-document.getElementById("add-user-form").addEventListener("submit", function(event) {
-  event.preventDefault();
-  
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const role = document.getElementById("role").value.trim();
+  const name = document.getElementById('new-name').value.trim();
+  const email = document.getElementById('new-email').value.trim();
+  const role = document.getElementById('new-role').value;
 
   if (name && email && role) {
-    addUser(name, email, role);
+    const newUser = {
+      name: name,
+      email: email,
+      role: role
+    };
+
+    const newUserRef = ref(database, 'users/' + Date.now()); // Create a unique ID based on timestamp
+    set(newUserRef, newUser)
+      .then(() => {
+        alert("New user added successfully");
+        addUserForm.reset(); // Reset form
+        loadUsers(); // Reload user list
+      })
+      .catch((error) => {
+        console.error("Error adding user:", error);
+      });
   } else {
-    alert("Please fill in all fields.");
+    alert("Please fill out all fields");
   }
 });
 
-// Fetch users on page load
-document.addEventListener("DOMContentLoaded", fetchUsers);
+// ✅ Create Course Form
+const createCourseForm = document.getElementById('create-course-form');
+createCourseForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+
+
+
+
+  const title = document.getElementById('course-title').value.trim();
+  const description = document.getElementById('course-description').value.trim();
+  const videoUrl = document.getElementById('course-video-url').value.trim();
+
+
+
+
+
+  if (title && description && videoUrl) {
+    alert(`Course "${title}" created successfully!`);
+    createCourseForm.reset(); // Reset form after submission
+    // Add Firestore Database Insertion Logic if needed for courses
+  } else {
+    alert("Please fill out all course fields.");
+  }
+});
