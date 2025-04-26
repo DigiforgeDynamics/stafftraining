@@ -5,58 +5,197 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="admin-style.css">
+  <style>
+    /* Loading spinner style */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Hide loader after page is ready */
+    .hidden { display: none; }
+  </style>
 </head>
 <body>
 
-  <header>
-    <h1>Admin Dashboard</h1>
-    <button id="logout-btn">Logout</button>
-  </header>
+<!-- Loader -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
 
-  <main>
-    <!-- User Management Section -->
-    <section id="users-section">
-      <h2>Manage Users</h2>
-      <form id="add-user-form">
-        <input type="text" id="new-name" placeholder="Full Name" required>
-        <input type="email" id="new-email" placeholder="Email" required>
-        <select id="new-role" required>
-          <option value="" disabled selected>Select Role</option>
-          <option value="Employee">Employee</option>
-          <option value="Admin">Admin</option>
-        </select>
-        <button type="submit">Add User</button>
-      </form>
+<!-- Admin content -->
+<header>
+  <h1>Admin Dashboard</h1>
+  <button id="logout-btn">Logout</button>
+</header>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="users-table">
-          <!-- Dynamic Users Here -->
-        </tbody>
-      </table>
-    </section>
+<main>
+  <section id="user-management">
+    <h2>User Management</h2>
+    <form id="add-user-form">
+      <input type="text" id="new-name" placeholder="Name" required>
+      <input type="email" id="new-email" placeholder="Email" required>
+      <select id="new-role" required>
+        <option value="">Select Role</option>
+        <option value="User">User</option>
+        <option value="Admin">Admin</option>
+      </select>
+      <button type="submit">Add User</button>
+    </form>
+    <table id="users-section">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Users will load here -->
+      </tbody>
+    </table>
+  </section>
 
-    <!-- Course Management Section -->
-    <section id="courses-section">
-      <h2>Create New Course</h2>
-      <form id="create-course-form">
-        <input type="text" id="course-title" placeholder="Course Title" required>
-        <textarea id="course-description" placeholder="Course Description" required></textarea>
-        <input type="url" id="course-video-url" placeholder="Video URL" required>
-        <button type="submit">Create Course</button>
-      </form>
-    </section>
+  <section id="course-management">
+    <h2>Course Management</h2>
+    <form id="create-course-form">
+      <input type="text" id="course-title" placeholder="Course Title" required>
+      <input type="text" id="course-description" placeholder="Description" required>
+      <input type="url" id="course-video-url" placeholder="Video URL" required>
+      <button type="submit">Create Course</button>
+    </form>
+  </section>
+</main>
 
-  </main>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  import { getDatabase, ref, push, get, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-  <!-- Modern Way: Load JS -->
-  <script type="module" src="admin.js"></script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
+    authDomain: "stafftraining-eef33.firebaseapp.com",
+    databaseURL: "https://stafftraining-eef33-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "stafftraining-eef33",
+    storageBucket: "stafftraining-eef33.appspot.com",
+    messagingSenderId: "912734544923",
+    appId: "1:912734544923:web:0d52ee5deb49e6380a04be",
+    measurementId: "G-3XY8E8XVT2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+  const loader = document.getElementById('loader');
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Logged in:", user.email);
+      fetchUsers();
+    } else {
+      window.location.href = "index.html";
+    }
+    loader.classList.add('hidden'); // ✅ Hide loader after auth check
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    signOut(auth).then(() => {
+      window.location.href = "index.html";
+    });
+  });
+
+  function fetchUsers() {
+    const usersRef = ref(db, 'users');
+    get(usersRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const users = snapshot.val();
+        displayUsers(users);
+      } else {
+        console.log("No users found.");
+        document.getElementById('users-section').innerHTML = "<p>No users found.</p>";
+      }
+    }).catch((error) => {
+      console.error("Error fetching users:", error);
+    });
+  }
+
+  function displayUsers(users) {
+    const tbody = document.querySelector("#users-section tbody");
+    tbody.innerHTML = "";
+    Object.keys(users).forEach((key) => {
+      const user = users[key];
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td><button class="delete-btn" onclick="deleteUser('${key}')">Delete</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  window.deleteUser = function(userKey) {
+    const userRef = ref(db, 'users/' + userKey);
+    remove(userRef)
+      .then(() => {
+        console.log('User deleted');
+        fetchUsers();
+      })
+      .catch((error) => {
+        console.error('Error deleting user:', error);
+      });
+  }
+
+  document.getElementById('add-user-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('new-name').value.trim();
+    const email = document.getElementById('new-email').value.trim();
+    const role = document.getElementById('new-role').value;
+    if (name && email && role) {
+      const usersRef = ref(db, 'users');
+      push(usersRef, { name, email, role }).then(() => {
+        fetchUsers();
+        document.getElementById('add-user-form').reset();
+      });
+    }
+  });
+
+  document.getElementById('create-course-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = document.getElementById('course-title').value.trim();
+    const description = document.getElementById('course-description').value.trim();
+    const videoUrl = document.getElementById('course-video-url').value.trim();
+    if (title && description && videoUrl) {
+      const coursesRef = ref(db, 'courses');
+      push(coursesRef, { title, description, videoUrl }).then(() => {
+        alert('Course created successfully!');
+        document.getElementById('create-course-form').reset();
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
