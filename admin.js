@@ -1,9 +1,12 @@
-  // admin.js
+// admin.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import {
   getFirestore,
   collection,
-  getDocs
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import {
   getAuth,
@@ -41,25 +44,27 @@ logoutBtn.addEventListener('click', async () => {
   window.location.href = "index.html";
 });
 
-// Fetch users from Firestore
+// Load Users
 async function loadUsers() {
   const tableBody = document.querySelector("#users-section tbody");
   tableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
   try {
-    const querySnapshot = await getDocs(collection(db, "users")); // "users" collection in Firestore
-    tableBody.innerHTML = ""; // Clear after loading
+    const querySnapshot = await getDocs(collection(db, "users"));
+    tableBody.innerHTML = "";
 
-    querySnapshot.forEach((doc) => {
-      const user = doc.data();
+    querySnapshot.forEach((docSnap) => {
+      const user = docSnap.data();
+      const userId = docSnap.id;
+
       const row = `
         <tr>
           <td>${user.name || '-'}</td>
           <td>${user.email}</td>
           <td>${user.role || 'Employee'}</td>
           <td>
-            <button class="action-btn">Edit</button>
-            <button class="action-btn danger">Delete</button>
+            <button class="action-btn" onclick="editUser('${userId}')">Edit</button>
+            <button class="action-btn danger" onclick="deleteUser('${userId}')">Delete</button>
           </td>
         </tr>
       `;
@@ -75,5 +80,50 @@ async function loadUsers() {
   }
 }
 
-// Load users when the page loads
+// Add User
+const addUserForm = document.getElementById('add-user-form');
+addUserForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('new-name').value.trim();
+  const email = document.getElementById('new-email').value.trim();
+  const role = document.getElementById('new-role').value;
+
+  if (!name || !email || !role) {
+    alert("All fields are required!");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "users"), { name, email, role });
+    alert("User added successfully!");
+    addUserForm.reset();
+    loadUsers(); // Refresh user list
+  } catch (error) {
+    console.error("Error adding user:", error);
+    alert("Failed to add user. Check console for details.");
+  }
+});
+
+// Delete User
+window.deleteUser = async (userId) => {
+  const confirmDelete = confirm("Are you sure you want to delete this user?");
+  if (!confirmDelete) return;
+
+  try {
+    await deleteDoc(doc(db, "users", userId));
+    alert("User deleted successfully!");
+    loadUsers(); // Refresh list
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    alert("Failed to delete user. Check console for details.");
+  }
+};
+
+// Placeholder for future edit functionality
+window.editUser = (userId) => {
+  alert(`Edit feature coming soon for user ID: ${userId}`);
+};
+
+// Initial Load
 loadUsers();
