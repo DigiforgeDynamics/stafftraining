@@ -2,71 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="admin-style.css">
-</head>
-<body>
-  <!-- Admin Navbar -->
-  <nav>
-    <span>Admin Dashboard</span>
-    <button id="logout-btn">Logout</button>
-  </nav>
 
-  <!-- Dashboard Analytics -->
-  <div id="dashboard-analytics">
-    <h2>Dashboard Analytics</h2>
-    <p>Active Users: <span id="active-users">0</span></p>
-    <p>Courses Created: <span id="courses-count">0</span></p>
-  </div>
-
-  <!-- Users Table Section -->
-  <section id="users-section">
-    <h3>Users</h3>
-    <table id="users-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Users will be dynamically inserted here -->
-      </tbody>
-    </table>
-  </section>
-
-  <!-- Add User Form -->
-  <section id="add-user-section">
-    <h3>Add New User</h3>
-    <form id="add-user-form">
-      <input type="text" id="new-name" placeholder="Name" required>
-      <input type="email" id="new-email" placeholder="Email" required>
-      <select id="new-role">
-        <option value="User">User</option>
-        <option value="Admin">Admin</option>
-      </select>
-      <button type="submit">Add User</button>
-    </form>
-  </section>
-
-  <!-- Create Course Form -->
-  <section id="create-course-section">
-    <h3>Create New Course</h3>
-    <form id="create-course-form">
-      <input type="text" id="course-title" placeholder="Course Title" required>
-      <textarea id="course-description" placeholder="Course Description" required></textarea>
-      <input type="url" id="course-video-url" placeholder="Course Video URL" required>
-      <button type="submit">Create Course</button>
-    </form>
-  </section>
-
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"></script>
-  <script src="admin.js"></script>
+
+  <!-- Admin JS -->
+  <script src="admin.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <h1>Admin Dashboard</h1>
+    <button id="logout-btn" class="logout-btn">Logout</button>
+  </header>
+
+  <main>
+    <section id="users-section">
+      <h2>Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="users-table">
+          <!-- Users will be dynamically loaded here -->
+        </tbody>
+      </table>
+
+      <form id="add-user-form">
+        <h3>Add New User</h3>
+        <input type="text" id="new-name" placeholder="Name" required>
+        <input type="email" id="new-email" placeholder="Email" required>
+        <select id="new-role" required>
+          <option value="">Select Role</option>
+          <option value="Employee">Employee</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <button type="submit">Add User</button>
+      </form>
+    </section>
+
+    <section id="courses-section">
+      <h2>Create Course</h2>
+      <form id="create-course-form">
+        <input type="text" id="course-title" placeholder="Course Title" required>
+        <textarea id="course-description" placeholder="Course Description" required></textarea>
+        <input type="url" id="course-video-url" placeholder="Video URL" required>
+        <button type="submit">Create Course</button>
+      </form>
+    </section>
+  </main>
+
 </body>
 </html>
