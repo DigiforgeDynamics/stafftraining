@@ -1,4 +1,4 @@
-
+// ✅ Import Firebase Functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
@@ -7,7 +7,11 @@ import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/fire
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
-@@ -15,125 +14,113 @@ const firebaseConfig = {
+  databaseURL: "https://stafftraining-eef33-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "stafftraining-eef33",
+  storageBucket: "stafftraining-eef33.appspot.com",
+  messagingSenderId: "912734544923",
+  appId: "1:912734544923:web:0d52ee5deb49e6380a04be",
   measurementId: "G-3XY8E8XVT2"
 };
 
@@ -35,7 +39,6 @@ logoutBtn.addEventListener('click', async () => {
 
 // ✅ Reference to the users section in database
 const usersRef = ref(database, 'users');
-
 
 // ✅ Fetch Users from Firebase
 function loadUsers() {
@@ -70,7 +73,6 @@ function displayUsers(users) {
       </tr>
     `;
     usersTableBody.insertAdjacentHTML('beforeend', row);
-
   }
 }
 
@@ -78,13 +80,9 @@ function displayUsers(users) {
 function deleteUser(userId) {
   const userRef = ref(database, `users/${userId}`);
   remove(userRef)
-
-
-
     .then(() => {
       alert("User deleted successfully");
       loadUsers(); // Refresh users list after deletion
-
     })
     .catch((error) => {
       console.error("Error deleting user:", error);
@@ -127,17 +125,9 @@ const createCourseForm = document.getElementById('create-course-form');
 createCourseForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-
-
-
-
   const title = document.getElementById('course-title').value.trim();
   const description = document.getElementById('course-description').value.trim();
   const videoUrl = document.getElementById('course-video-url').value.trim();
-
-
-
-
 
   if (title && description && videoUrl) {
     alert(`Course "${title}" created successfully!`);
