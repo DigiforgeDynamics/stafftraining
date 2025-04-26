@@ -6,14 +6,14 @@
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="admin-style.css">
   <style>
-    /* Loading spinner style */
-    #loader {
+    /* Loading screen full page */
+    #full-page-loader {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
+      height: 100vh;
+      width: 100vw;
+      background-color: white;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -23,26 +23,33 @@
       border: 6px solid #f3f3f3;
       border-top: 6px solid #3498db;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       animation: spin 1s linear infinite;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    /* Hide loader after page is ready */
-    .hidden { display: none; }
+
+    /* Hide admin UI initially */
+    body.admin-loaded main,
+    body.admin-loaded header {
+      display: block;
+    }
+    header, main {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-<!-- Loader -->
-<div id="loader">
+<!-- Full page loader -->
+<div id="full-page-loader">
   <div class="spinner"></div>
 </div>
 
-<!-- Admin content -->
+<!-- Admin Dashboard content -->
 <header>
   <h1>Admin Dashboard</h1>
   <button id="logout-btn">Logout</button>
@@ -107,16 +114,18 @@
   const auth = getAuth(app);
   const db = getDatabase(app);
 
-  const loader = document.getElementById('loader');
+  const loader = document.getElementById('full-page-loader');
 
+  // Auth Guard
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("Logged in:", user.email);
+      console.log("Authenticated:", user.email);
+      document.body.classList.add('admin-loaded'); // ✅ Unlock content
+      loader.style.display = 'none'; // Hide loader
       fetchUsers();
     } else {
-      window.location.href = "index.html";
+      window.location.href = "index.html"; // Redirect unauthorized
     }
-    loader.classList.add('hidden'); // ✅ Hide loader after auth check
   });
 
   document.getElementById('logout-btn').addEventListener('click', () => {
@@ -132,8 +141,7 @@
         const users = snapshot.val();
         displayUsers(users);
       } else {
-        console.log("No users found.");
-        document.getElementById('users-section').innerHTML = "<p>No users found.</p>";
+        document.querySelector("#users-section tbody").innerHTML = "<tr><td colspan='4'>No users found.</td></tr>";
       }
     }).catch((error) => {
       console.error("Error fetching users:", error);
