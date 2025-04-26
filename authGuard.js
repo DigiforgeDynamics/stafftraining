@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -15,13 +15,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Auth Guard Protection
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // Authenticated => Show page
-    document.body.style.display = "block";
-  } else {
-    // Not authenticated => Redirect instantly
-    window.location.replace("index.html");
-  }
-});
+// Show the loading spinner
+const showLoader = () => {
+  const loader = document.getElementById("loader");
+  loader.style.display = "block";
+};
+
+// Hide the loading spinner
+const hideLoader = () => {
+  const loader = document.getElementById("loader");
+  loader.style.display = "none";
+};
+
+// Function to check if user is authenticated
+function authGuard() {
+  showLoader(); // Show loader while checking auth
+
+  // Get the body or the content of the page
+  const pageContent = document.getElementById("page-content");
+  pageContent.style.display = "none"; // Hide page content initially
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // If not authenticated, redirect to login page
+      window.location.href = "index.html";
+    } else {
+      // If authenticated, show the page content
+      pageContent.style.display = "block";
+      hideLoader(); // Hide loader
+    }
+  });
+}
+
+// Call the authGuard function to protect pages
+authGuard();
