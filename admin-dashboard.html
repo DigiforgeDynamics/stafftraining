@@ -1,65 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard | Staff Training Portal</title>
-  <link rel="stylesheet" href="admin-style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script type="module" src="admin-dashboard.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Admin Dashboard</h1>
-    <button id="logout-btn" class="logout-btn">Logout</button>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Admin Dashboard</h1>
+      <button id="logout-btn">Logout</button>
+    </header>
 
-  <main>
-    <!-- Manage Users Section -->
-    <section id="users-section" class="admin-section">
-      <h2>Manage Users</h2>
-      <table>
+    <section class="users-table-section">
+      <h2>Users List</h2>
+      <table id="users-table">
         <thead>
           <tr>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Users will be dynamically inserted here -->
+          <!-- User data will be inserted here dynamically -->
         </tbody>
       </table>
     </section>
+  </div>
 
-    <!-- Add New User Section -->
-    <section id="add-user-section" class="admin-section">
-      <h2>Add New User</h2>
-      <form id="add-user-form">
-        <input type="text" id="new-name" placeholder="Full Name" required />
-        <input type="email" id="new-email" placeholder="Email Address" required />
-        <select id="new-role" required>
-          <option value="">Select Role</option>
-          <option value="Employee">Employee</option>
-          <option value="Admin">Admin</option>
-        </select>
-        <button type="submit" class="action-btn">Add User</button>
-      </form>
-    </section>
-
-    <!-- Create New Course Section -->
-    <section id="create-course-section" class="admin-section">
-      <h2>Create New Course</h2>
-      <form id="create-course-form">
-        <input type="text" id="course-title" placeholder="Course Title" required />
-        <textarea id="course-description" placeholder="Course Description" required></textarea>
-        <input type="url" id="course-video-url" placeholder="Video URL" required />
-        <button type="submit" class="action-btn">Create Course</button>
-      </form>
-    </section>
-
-  </main>
-
-  <!-- Admin Script -->
-  <script type="module" src="admin.js"></script>
+  <script>
+    // Add the logout functionality
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      // Implement the logout functionality (you can use Firebase Auth for logout)
+      window.location.href = "login.html"; // Redirect to login page after logout
+    });
+  </script>
 </body>
 </html>
