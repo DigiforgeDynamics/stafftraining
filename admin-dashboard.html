@@ -1,88 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="module" src="admin.js" defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard</title>
+  <title>Admin Dashboard | Staff Training Portal</title>
   <link rel="stylesheet" href="admin-style.css">
-  <script type="module" src="logout.js" defer></script>
-  <script defer>
-    function showSection(sectionId) {
-      const sections = document.querySelectorAll('.admin-section');
-      sections.forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(sectionId).classList.remove('hidden');
-    }
-  </script>
 </head>
 <body>
+  <header>
+    <h1>Admin Dashboard</h1>
+    <button id="logout-btn" class="logout-btn">Logout</button>
+  </header>
 
-  <nav class="navbar">
-    <div class="nav-left">
-      <h1>Admin Portal</h1>
-    </div>
-    <div class="nav-right">
-      <button id="logout-btn" class="logout-btn">Logout</button>
-    </div>
-  </nav>
-
-  <main class="main-content">
-    <section class="button-group">
-      <button onclick="showSection('users-section')" class="nav-btn">Manage Users</button>
-      <button onclick="showSection('courses-section')" class="nav-btn">Manage Courses</button>
-      <button onclick="showSection('reports-section')" class="nav-btn">View Reports</button>
-    </section>
-
+  <main>
+    <!-- Manage Users Section -->
     <section id="users-section" class="admin-section">
       <h2>Manage Users</h2>
-      <table class="admin-table">
+      <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Example Row -->
-          <tr>
-            <td>John Doe</td>
-            <td>john@example.com</td>
-            <td>Employee</td>
-            <td><button class="action-btn">Edit</button> <button class="action-btn danger">Delete</button></td>
-          </tr>
-          <!-- Dynamic rows can be inserted here -->
+          <!-- Users will be dynamically inserted here -->
         </tbody>
       </table>
     </section>
 
-    <section id="courses-section" class="admin-section hidden">
-      <h2>Manage Courses</h2>
-      <form class="course-form">
-        <input type="text" placeholder="Course Title" required>
-        <textarea placeholder="Course Description" required></textarea>
+    <!-- Add New User Section -->
+    <section id="add-user-section" class="admin-section">
+      <h2>Add New User</h2>
+      <form id="add-user-form">
+        <input type="text" id="new-name" placeholder="Full Name" required />
+        <input type="email" id="new-email" placeholder="Email Address" required />
+        <select id="new-role" required>
+          <option value="">Select Role</option>
+          <option value="Employee">Employee</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <button type="submit" class="action-btn">Add User</button>
+      </form>
+    </section>
+
+    <!-- Create New Course Section -->
+    <section id="create-course-section" class="admin-section">
+      <h2>Create New Course</h2>
+      <form id="create-course-form">
+        <input type="text" id="course-title" placeholder="Course Title" required />
+        <textarea id="course-description" placeholder="Course Description" required></textarea>
+        <input type="url" id="course-video-url" placeholder="Video URL" required />
         <button type="submit" class="action-btn">Create Course</button>
       </form>
     </section>
 
-    <section id="reports-section" class="admin-section hidden">
-      <h2>Reports</h2>
-      <div class="report-card">
-        <h3>Total Users</h3>
-        <p>52</p>
-      </div>
-      <div class="report-card">
-        <h3>Courses Completed</h3>
-        <p>134</p>
-      </div>
-      <div class="report-card">
-        <h3>Active Sessions</h3>
-        <p>8</p>
-      </div>
-    </section>
-
   </main>
 
+  <!-- Admin Script -->
+  <script type="module" src="admin.js"></script>
 </body>
 </html>
