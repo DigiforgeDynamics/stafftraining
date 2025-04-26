@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +6,13 @@
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="admin-style.css">
   <script type="module" src="logout.js" defer></script>
+  <script defer>
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.admin-section');
+      sections.forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+  </script>
 </head>
 <body>
 
@@ -19,30 +26,61 @@
   </nav>
 
   <main class="main-content">
-    <section class="welcome-section">
-      <h2>Welcome, Admin!</h2>
-      <p>You have full access to manage the Staff Training Portal.</p>
+    <section class="button-group">
+      <button onclick="showSection('users-section')" class="nav-btn">Manage Users</button>
+      <button onclick="showSection('courses-section')" class="nav-btn">Manage Courses</button>
+      <button onclick="showSection('reports-section')" class="nav-btn">View Reports</button>
     </section>
 
-    <section class="admin-actions">
-      <div class="card">
-        <h3>Manage Users</h3>
-        <p>Add, edit, or remove employee accounts.</p>
-        <button class="action-btn">Go to Users</button>
-      </div>
+    <section id="users-section" class="admin-section">
+      <h2>Manage Users</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Row -->
+          <tr>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>Employee</td>
+            <td><button class="action-btn">Edit</button> <button class="action-btn danger">Delete</button></td>
+          </tr>
+          <!-- Dynamic rows can be inserted here -->
+        </tbody>
+      </table>
+    </section>
 
-      <div class="card">
-        <h3>Manage Courses</h3>
-        <p>Create or update training content and materials.</p>
-        <button class="action-btn">Go to Courses</button>
-      </div>
+    <section id="courses-section" class="admin-section hidden">
+      <h2>Manage Courses</h2>
+      <form class="course-form">
+        <input type="text" placeholder="Course Title" required>
+        <textarea placeholder="Course Description" required></textarea>
+        <button type="submit" class="action-btn">Create Course</button>
+      </form>
+    </section>
 
-      <div class="card">
-        <h3>View Reports</h3>
-        <p>Analyze user progress and platform usage.</p>
-        <button class="action-btn">View Reports</button>
+    <section id="reports-section" class="admin-section hidden">
+      <h2>Reports</h2>
+      <div class="report-card">
+        <h3>Total Users</h3>
+        <p>52</p>
+      </div>
+      <div class="report-card">
+        <h3>Courses Completed</h3>
+        <p>134</p>
+      </div>
+      <div class="report-card">
+        <h3>Active Sessions</h3>
+        <p>8</p>
       </div>
     </section>
+
   </main>
 
 </body>
