@@ -81,3 +81,11 @@ onAuthStateChanged(auth, async (user) => {
     await redirectToDashboard(user);
   }
 });
+
+// After successful login
+if (role === "admin") {
+  window.location.replace("admin-dashboard.html");
+} else {
+  window.location.replace("dashboard.html");
+}
+
