@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -15,6 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase();
 
 // Wait for Firebase Auth to determine the current user
 onAuthStateChanged(auth, (user) => {
@@ -23,8 +25,29 @@ onAuthStateChanged(auth, (user) => {
 
   if (user) {
     // User is authenticated
-    if (loader) loader.style.display = "none";
-    if (container) container.style.display = "block";
+    // Fetch the user's role from Realtime Database
+    const userRef = ref(db, 'users/' + user.uid);
+    get(userRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        
+        // Check if the user is an admin
+        if (userData.role === 'admin') {
+          // User is admin, show the admin page
+          if (loader) loader.style.display = "none";
+          if (container) container.style.display = "block";
+        } else {
+          // User is not admin, redirect to regular page
+          window.location.href = "index.html";  // or another page for regular users
+        }
+      } else {
+        // No user data found, redirect to login
+        window.location.href = "index.html";
+      }
+    }).catch((error) => {
+      console.error("Error fetching user data:", error);
+      window.location.href = "index.html"; // Redirect if there's an error
+    });
   } else {
     // Not authenticated, redirect to login
     window.location.href = "index.html";
