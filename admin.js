@@ -3,17 +3,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getDatabase, ref, get, set, push, remove } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-// ✅ Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
+  databaseURL: "https://stafftraining-eef33-default-rtdb.firebaseio.com",  // 🔥 Add this
   projectId: "stafftraining-eef33",
   storageBucket: "stafftraining-eef33.appspot.com",
   messagingSenderId: "912734544923",
   appId: "1:912734544923:web:0d52ee5deb49e6380a04be",
-  measurementId: "G-3XY8E8XVT2",
-  databaseURL: "https://stafftraining-eef33-default-rtdb.firebaseio.com"
+  measurementId: "G-3XY8E8XVT2"
 };
+
 
 // ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
