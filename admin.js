@@ -98,3 +98,60 @@ createCourseForm.addEventListener('submit', (e) => {
     // Here you can add Firestore Database Insertion Logic
   }
 });
+
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+// Initialize Firebase
+const database = getDatabase();
+
+// Reference to the users data
+const usersRef = ref(database, 'users');
+
+// Function to fetch users
+function fetchUsers() {
+  get(usersRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const users = snapshot.val(); // Retrieve data as JSON
+        displayUsers(users);
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+// Display users in the admin dashboard
+function displayUsers(users) {
+  const usersTable = document.getElementById("users-table");
+
+  // Clear the table first
+  usersTable.innerHTML = '';
+
+  // Loop through each user and add to the table
+  for (const userId in users) {
+    const user = users[userId];
+    const row = document.createElement("tr");
+
+    const nameCell = document.createElement("td");
+    nameCell.textContent = user.name;
+    row.appendChild(nameCell);
+
+    const emailCell = document.createElement("td");
+    emailCell.textContent = user.email;
+    row.appendChild(emailCell);
+
+    const roleCell = document.createElement("td");
+    roleCell.textContent = user.role;
+    row.appendChild(roleCell);
+
+    // Append row to the table
+    usersTable.appendChild(row);
+  }
+}
+
+// Fetch users when the page loads
+window.onload = fetchUsers;
+
