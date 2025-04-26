@@ -31,13 +31,18 @@ const hideLoader = () => {
 function authGuard() {
   showLoader(); // Show loader while checking auth
 
+  // Get the body or the content of the page
+  const pageContent = document.getElementById("page-content");
+  pageContent.style.display = "none"; // Hide page content initially
+
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       // If not authenticated, redirect to login page
       window.location.href = "index.html";
     } else {
-      // If authenticated, hide the loader
-      hideLoader();
+      // If authenticated, show the page content
+      pageContent.style.display = "block";
+      hideLoader(); // Hide loader
     }
   });
 }
