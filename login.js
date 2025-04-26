@@ -1,10 +1,15 @@
-// ✅ Correct Firebase import with closing quote
+// ✅ Correct Firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 // ✅ Firebase config
 const firebaseConfig = {
@@ -20,6 +25,7 @@ const firebaseConfig = {
 // ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // ✅ Element references
 const loginForm = document.getElementById('login-form');
@@ -41,9 +47,28 @@ loginForm.addEventListener("submit", async (e) => {
   loginBtn.disabled = true;
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "dashboard.html";
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // ✅ Fetch user role from Firestore
+    const userDocRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      if (userData.role === "admin") {
+        window.location.href = "admin.html";
+      } else if (userData.role === "employee") {
+        window.location.href = "dashboard.html";
+      } else {
+        errorMsg.textContent = "Unauthorized role. Contact admin.";
+      }
+    } else {
+      errorMsg.textContent = "No user profile found. Contact admin.";
+    }
+
   } catch (error) {
+    console.error(error);
     errorMsg.textContent = "Invalid email or password. Please try again.";
   }
 
@@ -53,8 +78,27 @@ loginForm.addEventListener("submit", async (e) => {
 });
 
 // ✅ Redirect if already logged in
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
-    window.location.href = "dashboard.html";
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData.role === "admin") {
+          window.location.href = "admin.html";
+        } else if (userData.role === "employee") {
+          window.location.href = "dashboard.html";
+        } else {
+          window.location.href = "index.html";
+        }
+      } else {
+        window.location.href = "index.html";
+      }
+    } catch (error) {
+      console.error(error);
+      window.location.href = "index.html";
+    }
   }
 });
