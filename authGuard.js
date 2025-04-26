@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -17,41 +17,44 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getDatabase(app);
+const database = getDatabase(app);
 
 // Elements
+const loader = document.getElementById('loader');
 const container = document.querySelector('.container');
 
-// Always hide container first (if it exists)
+// Hide container by default
 if (container) container.style.display = "none";
 
-// Wait for authentication state
+// Start checking authentication state
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
-      const userRef = ref(db, `users/${user.uid}`);
-      const snapshot = await get(userRef);
+      const dbRef = ref(database);
+      const snapshot = await get(child(dbRef, `users/${user.uid}`));
 
       if (snapshot.exists()) {
         const userData = snapshot.val();
-        
-        if (userData.role && userData.role === 'admin') {
-          // ✅ Admin confirmed
+        const role = userData.role || "employee"; // default to employee if role not found
+
+        if (role === "admin") {
+          // ✅ User is admin
+          if (loader) loader.style.display = "none";
           if (container) container.style.display = "block";
         } else {
-          // 🚫 Not an admin, redirect
+          // 🚫 Not admin
           window.location.href = "index.html";
         }
       } else {
-        // 🚫 No user data, redirect
+        // 🚫 No user record in DB
         window.location.href = "index.html";
       }
     } catch (error) {
-      console.error("Error checking admin role:", error);
+      console.error("Error verifying admin role:", error);
       window.location.href = "index.html";
     }
   } else {
-    // 🚫 No user logged in
+    // 🚫 User not logged in
     window.location.href = "index.html";
   }
 });
