@@ -2,31 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard - Staff Training Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Link to Admin CSS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
   <link rel="stylesheet" href="admin-style.css">
-
-  <!-- Firebase App (CDN) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
 </head>
 <body>
 
-  <header class="admin-header">
+  <header>
     <h1>Admin Dashboard</h1>
-    <button id="logout-btn" class="logout-btn">Logout</button>
+    <button id="logout-btn">Logout</button>
   </header>
 
-  <main class="admin-main">
-    <section id="users-section" class="section">
+  <main>
+    <!-- User Management Section -->
+    <section id="users-section">
       <h2>Manage Users</h2>
+      <form id="add-user-form">
+        <input type="text" id="new-name" placeholder="Full Name" required>
+        <input type="email" id="new-email" placeholder="Email" required>
+        <select id="new-role" required>
+          <option value="" disabled selected>Select Role</option>
+          <option value="Employee">Employee</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <button type="submit">Add User</button>
+      </form>
 
-      <!-- User Table -->
-      <table class="users-table">
+      <table>
         <thead>
           <tr>
             <th>Name</th>
@@ -35,38 +37,26 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="users-table-body">
-          <!-- User rows will be inserted here dynamically -->
+        <tbody id="users-table">
+          <!-- Dynamic Users Here -->
         </tbody>
       </table>
-
-      <!-- Add User Form -->
-      <h3>Add New User</h3>
-      <form id="add-user-form" class="form">
-        <input type="text" id="new-name" placeholder="Full Name" required>
-        <input type="email" id="new-email" placeholder="Email Address" required>
-        <select id="new-role" required>
-          <option value="">Select Role</option>
-          <option value="Employee">Employee</option>
-          <option value="Admin">Admin</option>
-        </select>
-        <button type="submit" class="primary-btn">Add User</button>
-      </form>
     </section>
 
-    <section id="courses-section" class="section">
+    <!-- Course Management Section -->
+    <section id="courses-section">
       <h2>Create New Course</h2>
-      <form id="create-course-form" class="form">
+      <form id="create-course-form">
         <input type="text" id="course-title" placeholder="Course Title" required>
         <textarea id="course-description" placeholder="Course Description" required></textarea>
-        <input type="url" id="course-video-url" placeholder="Vimeo Video URL" required>
-        <button type="submit" class="primary-btn">Create Course</button>
+        <input type="url" id="course-video-url" placeholder="Video URL" required>
+        <button type="submit">Create Course</button>
       </form>
     </section>
+
   </main>
 
-  <!-- Link to Admin JS -->
-  <script src="admin.js"></script>
-
+  <!-- Modern Way: Load JS -->
+  <script type="module" src="admin.js"></script>
 </body>
 </html>
