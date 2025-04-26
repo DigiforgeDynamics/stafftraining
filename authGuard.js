@@ -1,7 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 
-// Firebase configuration
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
@@ -12,23 +12,18 @@ const firebaseConfig = {
   measurementId: "G-3XY8E8XVT2"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Wait for Firebase Auth to determine the current user
-onAuthStateChanged(auth, (user) => {
-  const loader = document.getElementById('loader');
-  const container = document.querySelector('.container');
+// Function to check if user is authenticated
+function authGuard() {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Redirect to login page if the user is not authenticated
+      window.location.href = "index.html";
+    }
+  });
+}
 
-  if (user) {
-    // User is authenticated
-    if (loader) loader.style.display = "none";
-    if (container) container.style.display = "block";
-  } else {
-    // Not authenticated, redirect to login
-    window.location.href = "index.html";
-  }
-});
-
-
+// Call the authGuard function to protect pages
+authGuard();
