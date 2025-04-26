@@ -1,13 +1,9 @@
-// ✅ Firebase SDK Imports
+// Firebase Configuration and Initialization
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import {
-  getAuth,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+import { getAuth, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-// ✅ Firebase configuration
+// Firebase config object
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
@@ -18,119 +14,121 @@ const firebaseConfig = {
   measurementId: "G-3XY8E8XVT2"
 };
 
-// ✅ Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const database = getDatabase(app);
+const db = getFirestore(app);
 
-// ✅ Check Admin Authentication
+// Check Admin Authentication
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "index.html"; // Not logged in
   } else {
     console.log("Admin logged in:", user.email);
-    loadUsers(); // Load dummy user list on login
+    loadUsers(); // Load user data
+    fetchAnalytics(); // Fetch dashboard analytics
   }
 });
 
-// ✅ Logout Admin
+// Logout function
 const logoutBtn = document.getElementById('logout-btn');
 logoutBtn.addEventListener('click', async () => {
   await signOut(auth);
   window.location.href = "index.html";
 });
 
-// ✅ Reference to users data
-const usersRef = ref(database, 'users');
+// User Role Management
+const usersTableBody = document.querySelector("#users-section tbody");
 
-// ✅ Fetch users from Firebase Realtime Database
-function fetchUsers() {
-  get(usersRef)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const users = snapshot.val(); // Retrieve data as JSON
-        displayUsers(users);
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-// ✅ Display users in the admin dashboard
-function displayUsers(users) {
-  const usersTableBody = document.querySelector("#users-section tbody");
-  usersTableBody.innerHTML = '';
-
-  for (const userId in users) {
-    const user = users[userId];
+const loadUsers = async () => {
+  const usersSnapshot = await getDocs(collection(db, "users"));
+  usersTableBody.innerHTML = ""; // Clear table
+  usersSnapshot.forEach((doc) => {
+    const user = doc.data();
     const row = `
       <tr>
         <td>${user.name}</td>
         <td>${user.email}</td>
-        <td>${user.role}</td>
-        <td><button onclick="deleteUser('${userId}')" class="delete-btn">Delete</button></td>
+        <td>
+          <select onchange="updateUserRole('${doc.id}', this.value)">
+            <option value="User" ${user.role === 'User' ? 'selected' : ''}>User</option>
+            <option value="Admin" ${user.role === 'Admin' ? 'selected' : ''}>Admin</option>
+          </select>
+        </td>
+        <td><button onclick="deleteUser('${doc.id}')" class="delete-btn">Delete</button></td>
       </tr>
     `;
     usersTableBody.insertAdjacentHTML('beforeend', row);
-  }
-}
-
-// ✅ Delete User (dummy logic)
-window.deleteUser = function(userId) {
-  const userRef = ref(database, 'users/' + userId);
-  userRef.remove()
-    .then(() => {
-      alert("User deleted successfully.");
-      fetchUsers(); // Refresh user list
-    })
-    .catch((error) => {
-      console.error("Error deleting user:", error);
-    });
+  });
 };
 
-// ✅ Add New User (dummy logic)
+// Update User Role
+window.updateUserRole = async (userId, newRole) => {
+  const userRef = doc(db, "users", userId);
+  await updateDoc(userRef, { role: newRole });
+  console.log(`User role updated to ${newRole}`);
+};
+
+// Delete User
+window.deleteUser = async (userId) => {
+  const userRef = doc(db, "users", userId);
+  await deleteDoc(userRef);
+  loadUsers();
+};
+
+// Add New User
 const addUserForm = document.getElementById('add-user-form');
-addUserForm.addEventListener('submit', (e) => {
+addUserForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const name = document.getElementById('new-name').value.trim();
   const email = document.getElementById('new-email').value.trim();
   const role = document.getElementById('new-role').value;
 
-  if (name && email && role) {
-    const newUser = {
-      name,
-      email,
-      role
-    };
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, "password123"); // Default password
+    const user = userCredential.user;
 
-    // Here we would add the user to the Firebase Realtime Database
-    // Add user logic goes here...
-
-    alert(`User "${name}" added successfully!`);
+    await addDoc(collection(db, "users"), {
+      name: name,
+      email: user.email,
+      role: role,
+    });
+    loadUsers();
     addUserForm.reset();
-    fetchUsers(); // Refresh user list
+  } catch (error) {
+    console.error("Error adding user:", error);
   }
 });
 
-// ✅ Create New Course (simulation)
+// Create Course
 const createCourseForm = document.getElementById('create-course-form');
-createCourseForm.addEventListener('submit', (e) => {
+createCourseForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const title = document.getElementById('course-title').value.trim();
   const description = document.getElementById('course-description').value.trim();
   const videoUrl = document.getElementById('course-video-url').value.trim();
 
-  if (title && description && videoUrl) {
-    alert(`Course "${title}" created successfully!`);
+  try {
+    await addDoc(collection(db, "courses"), {
+      title: title,
+      description: description,
+      videoUrl: videoUrl,
+      createdAt: new Date(),
+    });
+    alert("Course created successfully!");
     createCourseForm.reset();
-    // Add Firestore logic to save course data
+  } catch (error) {
+    console.error("Error creating course:", error);
   }
 });
 
-// Fetch users when the page loads
-window.onload = fetchUsers;
+// Dashboard Analytics (Active Users and Course Count)
+const fetchAnalytics = async () => {
+  const usersSnapshot = await getDocs(collection(db, "users"));
+  const coursesSnapshot = await getDocs(collection(db, "courses"));
+
+  document.getElementById('active-users').textContent = usersSnapshot.size;
+  document.getElementById('courses-count').textContent = coursesSnapshot.size;
+};
