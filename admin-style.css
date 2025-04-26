@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f4f8;
+  background-color: #f5f5f5;
   padding: 20px;
 }
 
@@ -18,84 +18,85 @@ header {
   margin-bottom: 30px;
 }
 
-header h1 {
-  font-size: 24px;
+h1 {
+  font-size: 32px;
   color: #333;
 }
 
-.logout-btn {
-  padding: 10px 20px;
-  background-color: #e74c3c;
-  border: none;
+#logout-btn {
+  padding: 8px 16px;
+  background-color: #e63946;
   color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  border-radius: 5px;
 }
 
-.logout-btn:hover {
-  background-color: #c0392b;
+#logout-btn:hover {
+  background-color: #d62828;
 }
 
 main {
-  display: grid;
-  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-section {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-h2, h3 {
-  margin-bottom: 15px;
-}
-
+/* Form Styles */
 form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 input, textarea, select, button {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid #ccc;
 }
 
 button {
-  background-color: #3498db;
+  background-color: #2a9d8f;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #21867a;
 }
 
+/* Table Styles */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  background-color: white;
 }
 
-table th, table td {
+th, td {
+  border: 1px solid #ddd;
   padding: 12px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
+}
+
+th {
+  background-color: #264653;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f1f1f1;
 }
 
 .delete-btn {
-  background-color: #e67e22;
-  padding: 8px 15px;
-  border: none;
+  background-color: #e63946;
+  padding: 6px 12px;
   color: white;
-  cursor: pointer;
-  border-radius: 5px;
+  border: none;
+  border-radius: 4px;
 }
 
 .delete-btn:hover {
-  background-color: #d35400;
+  background-color: #d62828;
 }
