@@ -25,20 +25,19 @@ onAuthStateChanged(auth, (user) => {
 
   if (user) {
     // User is authenticated
-    // Fetch the user's role from Realtime Database
-    const userRef = ref(db, 'users/' + user.uid);
+    const userRef = ref(db, 'users/' + user.uid);  // Get the user's data
     get(userRef).then((snapshot) => {
       if (snapshot.exists()) {
         const userData = snapshot.val();
-        
+
         // Check if the user is an admin
         if (userData.role === 'admin') {
           // User is admin, show the admin page
           if (loader) loader.style.display = "none";
           if (container) container.style.display = "block";
         } else {
-          // User is not admin, redirect to regular page
-          window.location.href = "index.html";  // or another page for regular users
+          // User is not admin, redirect to regular user page (e.g., index.html)
+          window.location.href = "index.html";
         }
       } else {
         // No user data found, redirect to login
