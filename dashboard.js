@@ -1,3 +1,7 @@
+window.history.pushState(null, "", window.location.href);
+window.addEventListener("popstate", function(event) {
+  window.history.pushState(null, "", window.location.href);
+});
 
 
 document.querySelectorAll(".collapsible-header").forEach((button) => {
