@@ -20,12 +20,10 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // Elements
-const loader = document.getElementById('loader');
 const container = document.querySelector('.container');
 
-// Always hide container first
+// Always hide container first (if it exists)
 if (container) container.style.display = "none";
-if (loader) loader.style.display = "block";
 
 // Wait for authentication state
 onAuthStateChanged(auth, async (user) => {
@@ -38,27 +36,22 @@ onAuthStateChanged(auth, async (user) => {
         const userData = snapshot.val();
         
         if (userData.role && userData.role === 'admin') {
-          // ✅ User is admin
-          if (loader) loader.style.display = "none";
+          // ✅ Admin confirmed
           if (container) container.style.display = "block";
         } else {
-          // 🚫 Not admin, redirect to login
-          if (loader) loader.style.display = "none";
+          // 🚫 Not an admin, redirect
           window.location.href = "index.html";
         }
       } else {
-        // 🚫 User data not found, redirect
-        if (loader) loader.style.display = "none";
+        // 🚫 No user data, redirect
         window.location.href = "index.html";
       }
     } catch (error) {
       console.error("Error checking admin role:", error);
-      if (loader) loader.style.display = "none";
       window.location.href = "index.html";
     }
   } else {
     // 🚫 No user logged in
-    if (loader) loader.style.display = "none";
     window.location.href = "index.html";
   }
 });
