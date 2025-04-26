@@ -15,12 +15,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Show the loading spinner
+const showLoader = () => {
+  const loader = document.getElementById("loader");
+  loader.style.display = "block";
+};
+
+// Hide the loading spinner
+const hideLoader = () => {
+  const loader = document.getElementById("loader");
+  loader.style.display = "none";
+};
+
 // Function to check if user is authenticated
 function authGuard() {
+  showLoader(); // Show loader while checking auth
+
   onAuthStateChanged(auth, (user) => {
     if (!user) {
-      // Redirect to login page if the user is not authenticated
+      // If not authenticated, redirect to login page
       window.location.href = "index.html";
+    } else {
+      // If authenticated, hide the loader
+      hideLoader();
     }
   });
 }
