@@ -46,13 +46,37 @@ header button:hover {
   background-color: #d32f2f;
 }
 
-.users-table-section {
-  margin-top: 20px;
+section {
+  margin-bottom: 40px;
 }
 
 h2 {
-  margin-bottom: 20px;
   color: #4CAF50;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form input, form select, form textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #45a049;
 }
 
 table {
@@ -86,7 +110,15 @@ table td {
   font-size: 14px;
 }
 
-/* Adding some spacing between sections */
-section {
-  margin-bottom: 40px;
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
 }
