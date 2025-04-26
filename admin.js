@@ -1,20 +1,12 @@
-// admin.js
+// ✅ Import Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import {
   getAuth,
-  onAuthStateChanged,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
-// Firebase config
+// ✅ Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
@@ -25,105 +17,84 @@ const firebaseConfig = {
   measurementId: "G-3XY8E8XVT2"
 };
 
-// Initialize Firebase
+// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Protect Admin Page
+// ✅ Check Admin Authentication
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "index.html"; // Redirect to login if not logged in
+    window.location.href = "index.html"; // Not logged in
+  } else {
+    console.log("Admin logged in:", user.email);
+    loadUsers(); // Load dummy user list on login
   }
 });
 
-// Logout
+// ✅ Logout Admin
 const logoutBtn = document.getElementById('logout-btn');
 logoutBtn.addEventListener('click', async () => {
   await signOut(auth);
   window.location.href = "index.html";
 });
 
-// Load Users
-async function loadUsers() {
-  const tableBody = document.querySelector("#users-section tbody");
-  tableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+// ✅ Simulate User List (You can replace with real database)
+const usersTableBody = document.querySelector("#users-section tbody");
 
-  try {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    tableBody.innerHTML = "";
+const dummyUsers = [
+  { name: "John Doe", email: "john@example.com", role: "Employee" },
+  { name: "Jane Smith", email: "jane@example.com", role: "Admin" },
+];
 
-    querySnapshot.forEach((docSnap) => {
-      const user = docSnap.data();
-      const userId = docSnap.id;
-
-      const row = `
-        <tr>
-          <td>${user.name || '-'}</td>
-          <td>${user.email}</td>
-          <td>${user.role || 'Employee'}</td>
-          <td>
-            <button class="action-btn" onclick="editUser('${userId}')">Edit</button>
-            <button class="action-btn danger" onclick="deleteUser('${userId}')">Delete</button>
-          </td>
-        </tr>
-      `;
-      tableBody.insertAdjacentHTML('beforeend', row);
-    });
-
-    if (querySnapshot.empty) {
-      tableBody.innerHTML = "<tr><td colspan='4'>No users found.</td></tr>";
-    }
-  } catch (error) {
-    console.error("Error loading users:", error);
-    tableBody.innerHTML = "<tr><td colspan='4'>Error loading users.</td></tr>";
-  }
+function loadUsers() {
+  usersTableBody.innerHTML = "";
+  dummyUsers.forEach((user, index) => {
+    const row = `
+      <tr>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td><button onclick="deleteUser(${index})" class="delete-btn">Delete</button></td>
+      </tr>
+    `;
+    usersTableBody.insertAdjacentHTML('beforeend', row);
+  });
 }
 
-// Add User
+// ✅ Delete Dummy User
+window.deleteUser = function(index) {
+  dummyUsers.splice(index, 1);
+  loadUsers();
+}
+
+// ✅ Add New User (Simulation)
 const addUserForm = document.getElementById('add-user-form');
-addUserForm.addEventListener('submit', async (e) => {
+addUserForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const name = document.getElementById('new-name').value.trim();
   const email = document.getElementById('new-email').value.trim();
   const role = document.getElementById('new-role').value;
 
-  if (!name || !email || !role) {
-    alert("All fields are required!");
-    return;
-  }
-
-  try {
-    await addDoc(collection(db, "users"), { name, email, role });
-    alert("User added successfully!");
+  if (name && email && role) {
+    dummyUsers.push({ name, email, role });
+    loadUsers();
     addUserForm.reset();
-    loadUsers(); // Refresh user list
-  } catch (error) {
-    console.error("Error adding user:", error);
-    alert("Failed to add user. Check console for details.");
   }
 });
 
-// Delete User
-window.deleteUser = async (userId) => {
-  const confirmDelete = confirm("Are you sure you want to delete this user?");
-  if (!confirmDelete) return;
+// ✅ Create New Course (Simulation)
+const createCourseForm = document.getElementById('create-course-form');
+createCourseForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-  try {
-    await deleteDoc(doc(db, "users", userId));
-    alert("User deleted successfully!");
-    loadUsers(); // Refresh list
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    alert("Failed to delete user. Check console for details.");
+  const title = document.getElementById('course-title').value.trim();
+  const description = document.getElementById('course-description').value.trim();
+  const videoUrl = document.getElementById('course-video-url').value.trim();
+
+  if (title && description && videoUrl) {
+    alert(`Course "${title}" created successfully!`);
+    createCourseForm.reset();
+    // Here you can add Firestore Database Insertion Logic
   }
-};
-
-// Placeholder for future edit functionality
-window.editUser = (userId) => {
-  alert(`Edit feature coming soon for user ID: ${userId}`);
-};
-
-// Initial Load
-loadUsers();
+});
