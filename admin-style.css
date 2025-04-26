@@ -1,90 +1,101 @@
-/* Basic Styling for Admin Dashboard */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+/* Basic Reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-nav {
-  background-color: #333;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  border: none;
   color: white;
-  padding: 10px;
-  text-align: right;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-nav span {
-  margin-right: 20px;
-  font-size: 18px;
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+main {
+  display: grid;
+  gap: 30px;
+}
+
+section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+  margin-bottom: 15px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, textarea, select, button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
+  background-color: #3498db;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #2980b9;
 }
 
-#dashboard-analytics {
-  margin: 20px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#users-section {
-  margin: 20px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#users-table {
+table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-#users-table th, #users-table td {
-  padding: 10px;
+table th, table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
   text-align: left;
 }
 
 .delete-btn {
-  background-color: red;
-  color: white;
+  background-color: #e67e22;
+  padding: 8px 15px;
   border: none;
-  padding: 5px;
+  color: white;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .delete-btn:hover {
-  background-color: darkred;
-}
-
-form input, form textarea, form select {
-  margin: 10px 0;
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-form button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #45a049;
+  background-color: #d35400;
 }
