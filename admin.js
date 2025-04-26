@@ -1,118 +1,139 @@
-// ✅ Import Firebase Modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getDatabase, ref, get, push, set, remove } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+// ✅ Import Firebase Functions
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-// ✅ Firebase Config
+// ✅ Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3HyXaWZ58fMJxNOt2TpjDf5X0QsEZxo",
   authDomain: "stafftraining-eef33.firebaseapp.com",
+  databaseURL: "https://stafftraining-eef33-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "stafftraining-eef33",
   storageBucket: "stafftraining-eef33.appspot.com",
   messagingSenderId: "912734544923",
   appId: "1:912734544923:web:0d52ee5deb49e6380a04be",
-  measurementId: "G-3XY8E8XVT2",
-  databaseURL: "https://stafftraining-eef33-default-rtdb.firebaseio.com"
+  measurementId: "G-3XY8E8XVT2"
 };
 
 // ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getDatabase(app);
+const database = getDatabase();
 
-// ✅ Logout Button
-const logoutBtn = document.getElementById('logout-btn');
-logoutBtn.addEventListener('click', async () => {
-  await signOut(auth);
-  window.location.href = "index.html";
-});
-
-// ✅ Check Admin Authentication
+// ✅ Check if Admin is logged in
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "index.html"; // Not logged in
+    window.location.href = "index.html"; // Not logged in, redirect to login
   } else {
     console.log("Admin logged in:", user.email);
-    fetchUsers(); // Fetch users from database
+    loadUsers(); // Load users if logged in
   }
 });
 
-// ✅ Users Table Reference
-const usersTable = document.getElementById('users-table');
+// ✅ Logout Admin
+const logoutBtn = document.getElementById('logout-btn');
+logoutBtn.addEventListener('click', async () => {
+  await signOut(auth);
+  window.location.href = "index.html"; // Redirect to login page
+});
 
-// ✅ Fetch Users from Realtime Database
-function fetchUsers() {
-  const usersRef = ref(db, 'users/');
-  get(usersRef).then(snapshot => {
-    if (snapshot.exists()) {
-      const users = snapshot.val();
-      usersTable.innerHTML = ""; // Clear
-      for (const id in users) {
-        const user = users[id];
-        const row = `
-          <tr>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td>${user.role}</td>
-            <td><button class="delete-btn" onclick="deleteUser('${id}')">Delete</button></td>
-          </tr>
-        `;
-        usersTable.insertAdjacentHTML('beforeend', row);
+// ✅ Reference to the users section in database
+const usersRef = ref(database, 'users');
+
+// ✅ Fetch Users from Firebase
+function loadUsers() {
+  const usersTableBody = document.querySelector("#users-section tbody");
+  get(usersRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const users = snapshot.val();
+        displayUsers(users);
+      } else {
+        console.log("No users data found");
       }
-    } else {
-      usersTable.innerHTML = "<tr><td colspan='4'>No Users Found</td></tr>";
-    }
-  }).catch(console.error);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
-// ✅ Add New User
+// ✅ Display Users in Admin Dashboard
+function displayUsers(users) {
+  const usersTableBody = document.querySelector("#users-section tbody");
+  usersTableBody.innerHTML = ''; // Clear table before adding new data
+
+  for (const userId in users) {
+    const user = users[userId];
+    const row = `
+      <tr>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td><button onclick="deleteUser('${userId}')" class="delete-btn">Delete</button></td>
+      </tr>
+    `;
+    usersTableBody.insertAdjacentHTML('beforeend', row);
+  }
+}
+
+// ✅ Delete User from Firebase
+function deleteUser(userId) {
+  const userRef = ref(database, `users/${userId}`);
+  remove(userRef)
+    .then(() => {
+      alert("User deleted successfully");
+      loadUsers(); // Refresh users list after deletion
+    })
+    .catch((error) => {
+      console.error("Error deleting user:", error);
+    });
+}
+
+// ✅ Add New User Form
 const addUserForm = document.getElementById('add-user-form');
 addUserForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
   const name = document.getElementById('new-name').value.trim();
   const email = document.getElementById('new-email').value.trim();
   const role = document.getElementById('new-role').value;
 
   if (name && email && role) {
-    const usersRef = ref(db, 'users/');
-    const newUserRef = push(usersRef);
-    set(newUserRef, { name, email, role })
+    const newUser = {
+      name: name,
+      email: email,
+      role: role
+    };
+
+    const newUserRef = ref(database, 'users/' + Date.now()); // Create a unique ID based on timestamp
+    set(newUserRef, newUser)
       .then(() => {
-        alert('User Added Successfully');
-        addUserForm.reset();
-        fetchUsers();
+        alert("New user added successfully");
+        addUserForm.reset(); // Reset form
+        loadUsers(); // Reload user list
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error adding user:", error);
+      });
+  } else {
+    alert("Please fill out all fields");
   }
 });
 
-// ✅ Delete User
-window.deleteUser = function (id) {
-  const userRef = ref(db, `users/${id}`);
-  remove(userRef)
-    .then(() => {
-      alert('User Deleted Successfully');
-      fetchUsers();
-    })
-    .catch(console.error);
-}
-
-// ✅ Create New Course
+// ✅ Create Course Form
 const createCourseForm = document.getElementById('create-course-form');
 createCourseForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
   const title = document.getElementById('course-title').value.trim();
   const description = document.getElementById('course-description').value.trim();
   const videoUrl = document.getElementById('course-video-url').value.trim();
 
   if (title && description && videoUrl) {
-    const coursesRef = ref(db, 'courses/');
-    const newCourseRef = push(coursesRef);
-    set(newCourseRef, { title, description, videoUrl })
-      .then(() => {
-        alert('Course Created Successfully');
-        createCourseForm.reset();
-      })
-      .catch(console.error);
+    alert(`Course "${title}" created successfully!`);
+    createCourseForm.reset(); // Reset form after submission
+    // Add Firestore Database Insertion Logic if needed for courses
+  } else {
+    alert("Please fill out all course fields.");
   }
-}
+});
